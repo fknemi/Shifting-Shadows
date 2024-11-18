@@ -16,7 +16,7 @@ private:
     int vel;
     float speed;
     bool canJump;
-    static constexpr float gravity = 400.0f;
+    static constexpr float gravity = 900.0f;
     static constexpr float jumpSpeed = 350.0f;
 };
 
