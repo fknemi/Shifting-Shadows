@@ -23,10 +23,12 @@ int main() {
         if (IsKeyDown(KEY_RIGHT)) {
             player.moveRight();
         }
-        if (IsKeyPressed(KEY_SPACE)) {
+        if (IsKeyPressed(KEY_UP)) {
             player.jump();
         }
-
+        if (IsKeyPressed(KEY_F11)){
+            ToggleFullscreen();
+        }
         BeginDrawing();
         ClearBackground(BLACK);
 
