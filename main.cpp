@@ -1,21 +1,41 @@
 #include <raylib.h>
+#include "Player.h"
 
 int main() {
-  InitWindow(1280, 800, "Shifting Shadows");
-  bool showText = false;
-  SetTargetFPS(120);
-  while (!WindowShouldClose()) {
-    showText = IsKeyDown(KEY_SPACE);
-    DrawFPS(10, 10);
-    ClearBackground(BLACK);
-    BeginDrawing();
+    const int screenWidth = 1280;
+    const int screenHeight = 800;
+    const int targetFPS = 60;
 
-    if (showText) {
-      DrawText("Hello World", 200, 200, 80, RED);
-      BeginDrawing();
+    InitWindow(screenWidth, screenHeight, "Shifting Shadows");
+    Player player(screenWidth, screenHeight, screenWidth / 4, screenHeight / 2);
+    SetTargetFPS(targetFPS);
+
+    while (!WindowShouldClose()) {
+        float deltaTime = GetFrameTime();
+
+        // Update player
+        player.update(deltaTime);
+
+        // Move player
+        if (IsKeyDown(KEY_LEFT)) {
+            player.moveLeft();
+        }
+        if (IsKeyDown(KEY_RIGHT)) {
+            player.moveRight();
+        }
+        if (IsKeyPressed(KEY_SPACE)) {
+            player.jump();
+        }
+
+        BeginDrawing();
+        ClearBackground(BLACK);
+
+        DrawFPS(10, 10);
+        player.draw();
+
+        EndDrawing();
     }
 
-    EndDrawing();
-  }
-  return 0;
+    CloseWindow(); // Close window and OpenGL context
+    return 0;
 }
