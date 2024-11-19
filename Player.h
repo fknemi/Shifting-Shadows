@@ -14,9 +14,13 @@ private:
     int x;
     int y;
     int vel;
+    bool didHitObstacle = false;
+    int hearts = 5;
+    float tongueDelay;
+    float tongueReachLimit;
     float speed;
     bool canJump;
-    static constexpr float gravity = 900.0f;
+    static constexpr float gravity = 700.0f;
     static constexpr float jumpSpeed = 350.0f;
 };
 
