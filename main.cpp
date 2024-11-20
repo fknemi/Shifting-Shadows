@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include "Player.h"
+#include "elements/inputs/Mouse.h"
 
 int main() {
     const int screenWidth = 1280;
@@ -29,6 +30,9 @@ int main() {
         if (IsKeyPressed(KEY_F11)){
             ToggleFullscreen();
         }
+        // Update mouse
+        Mouse.update();
+
         BeginDrawing();
         ClearBackground(BLACK);
 
