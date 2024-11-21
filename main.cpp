@@ -1,12 +1,13 @@
+#include <iostream>
 #include <raylib.h>
 #include "Player.h"
-#include "elements/inputs/Mouse.h"
+#include "elements/inputs/Mouse.cpp"
 
 int main() {
     const int screenWidth = 1280;
     const int screenHeight = 800;
     const int targetFPS = 60;
-
+    Mouse mouse;
     InitWindow(screenWidth, screenHeight, "Shifting Shadows");
     Player player(screenWidth, screenHeight, screenWidth / 4, screenHeight / 2);
     SetTargetFPS(targetFPS);
@@ -31,7 +32,9 @@ int main() {
             ToggleFullscreen();
         }
         // Update mouse
-        Mouse.update();
+        mouse.update();
+                mouse.draw();
+
 
         BeginDrawing();
         ClearBackground(BLACK);
