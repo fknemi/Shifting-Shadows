@@ -10,7 +10,6 @@ public:
     void moveRight();
     void jump();
     void reset();
-    void resetCollisions();
     void update(float deltaTime);
     void checkCollisions(bool x, bool y, Rectangle platform);
     Rectangle getPosition();
@@ -22,13 +21,16 @@ private:
     int screenWidth;
     int screenHeight;
     int vel;
-    bool didHitObstacle = false;
+    bool hitFloor = false;
+    bool hitLeftWall = false;
+    bool hitRightWall = false;
     int hearts = 5;
     float tongueDelay;
     float tongueReachLimit;
     float speed;
     bool canJump;
     float yCollisionAxis;
+
     static constexpr float gravity = 700.0f;
     static constexpr float jumpSpeed = 350.0f;
 };
