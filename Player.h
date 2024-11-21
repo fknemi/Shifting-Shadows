@@ -4,7 +4,7 @@
 #include <raylib.h>
 class Player {
 public:
-    Player(float screenWidth, float screenHeight, float x, float y, int vel = 2);
+    Player(int screenWidth, int screenHeight, float x, float y, int vel = 2);
     void draw();
     void moveLeft();
     void moveRight();
@@ -17,8 +17,10 @@ public:
     float GetRectBottom(Rectangle rect);
 
 private:
-    int x;
-    int y;
+    float x;
+    float y;
+    int screenWidth;
+    int screenHeight;
     int vel;
     bool didHitObstacle = false;
     int hearts = 5;
