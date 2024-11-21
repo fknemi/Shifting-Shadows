@@ -1,6 +1,7 @@
 #include "Player.h"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "LevelOne.h"
 
 =======
@@ -18,17 +19,22 @@ int main() {
 
     SetTargetFPS(targetFPS);
 =======
+=======
+#include "elements/inputs/Mouse.cpp"
+#include "levels/LevelOne.h"
+>>>>>>> 9fe5fc9 (fixed player falling through floor when reset && updated LevelOne to use vector for platforms)
 #include "settings/Keybinds.cpp"
 #include <raylib.h>
-#include "levels/LevelOne.h"
-
 int main() {
   const int screenWidth = 1280;
   const int screenHeight = 800;
   const int targetFPS = 60;
   InitWindow(screenWidth, screenHeight, "Shifting Shadows");
-  Player player(screenWidth, screenHeight, (float)screenWidth / 4, (float)screenHeight / 2);
+  Player player(screenWidth, screenHeight, (float)screenWidth / 4,
+                (float)screenHeight / 2);
+  Mouse mouse;
   SetTargetFPS(targetFPS);
+<<<<<<< HEAD
 >>>>>>> aabba52 (updated Keybinds for player and added todo in Config.cpp, fixed collision for floor platform)
     LevelOne l1;
   while (!WindowShouldClose()) {
@@ -61,9 +67,18 @@ int main() {
 =======
         Rectangle platforms = l1.getPlatforms();
 =======
+=======
+  LevelOne l1;
+  while (!WindowShouldClose()) {
+    float deltaTime = GetFrameTime();
+    
+>>>>>>> 9fe5fc9 (fixed player falling through floor when reset && updated LevelOne to use vector for platforms)
     // Update player
     player.update(deltaTime);
-    player.resetCollisions();
+    l1.drawPlatforms();
+    mouse.update();
+    player.draw();
+    mouse.draw();
     // Move player
     if (IsKeyDown(Keybinds["MOVE LEFT"].CurrentKeybind)) {
       player.moveLeft();
@@ -77,6 +92,7 @@ int main() {
     if (IsKeyPressed(Keybinds["TOGGLE FULLSCREEN"].CurrentKeybind)) {
       ToggleFullscreen();
     }
+<<<<<<< HEAD
     if (IsKeyPressed(Keybinds["CAMOUFLAGE"].CurrentKeybind)) {}
     if (IsKeyPressed(Keybinds["USE TONGUE"].CurrentKeybind)) {}
     if (IsKeyPressed(Keybinds["GRAB TONGUE"].CurrentKeybind)) {}
@@ -106,13 +122,30 @@ int main() {
         player.draw();
 >>>>>>> 82ba856 (added floor platform with collision and collision methods to Player)
 =======
+=======
+    if (IsKeyPressed(Keybinds["CAMOUFLAGE"].CurrentKeybind)) {
+    }
+    if (IsKeyPressed(Keybinds["USE TONGUE"].CurrentKeybind)) {
+    }
+    if (IsKeyPressed(Keybinds["GRAB TONGUE"].CurrentKeybind)) {
+    }
+    std::vector<Rectangle> platforms = l1.getPlatforms();
+    for (Rectangle platform : platforms) {
+      if (CheckCollisionRecs(platform, player.getPosition())) {
+        DrawText("Platform Collision", 1280 / 4, 200, 80, RED);
+        player.checkCollisions(true, true, platform);
+      }
+    }
+    if (player.getPosition().y > 800) {
+      player.reset();
+    }
+>>>>>>> 9fe5fc9 (fixed player falling through floor when reset && updated LevelOne to use vector for platforms)
 
     BeginDrawing();
     ClearBackground(BLACK);
 >>>>>>> aabba52 (updated Keybinds for player and added todo in Config.cpp, fixed collision for floor platform)
 
     DrawFPS(10, 10);
-    player.draw();
 
     EndDrawing();
   }

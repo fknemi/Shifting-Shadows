@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef LEVELONE_H
 #define LEVELONE_H
 
@@ -22,43 +23,48 @@ public:
     void draw() {
         DrawTexture(texture, position.x, position.y, WHITE);
 =======
+=======
+#include "vector"
+>>>>>>> 9fe5fc9 (fixed player falling through floor when reset && updated LevelOne to use vector for platforms)
 #include <raylib.h>
-
 struct Platform {
-    float x;
-    float y;
-    float opacity;
-    float width;
-    float height;
-    bool enabledCollision;
-    bool isVisibleToPlayer;
-    bool drawPlatform;
-    Rectangle platform;
+  float x;
+  float y;
+  float opacity;
+  float width;
+  float height;
+  bool enabledCollision;
+  bool isVisibleToPlayer;
+  bool drawPlatform;
 
-    // Constructor to initialize the struct
-    Platform(int x, int y, float opacity, float width, float height, bool enabledCollision)
-        : x(x), y(y), opacity(opacity), width(width), height(height), enabledCollision(enabledCollision),
-          isVisibleToPlayer(true), drawPlatform(true) {
-        if (drawPlatform) {
-            draw();
-        }
+  // Constructor to initialize the struct
+  Platform(int x, int y, float opacity, float width, float height,
+           bool enabledCollision)
+      : x(x), y(y), opacity(opacity), width(width), height(height),
+        enabledCollision(enabledCollision), isVisibleToPlayer(true),
+        drawPlatform(true) {
+    if (drawPlatform) {
+      draw();
     }
+  }
 
-    // Draw function to draw the platform
-    void draw() {
-        DrawRectangle(x, y, width, height, GREEN);
-        platform = { x, y, width, height };
-    }
+  // Draw function to draw the platform
+  void draw() { DrawRectangle(x, y, width, height, GREEN); }
 
+<<<<<<< HEAD
     // Function to get the platform's rectangle
     Rectangle getPlatform() {
         return platform;
 >>>>>>> 82ba856 (added floor platform with collision and collision methods to Player)
     }
+=======
+  // Function to get the platform's rectangle
+>>>>>>> 9fe5fc9 (fixed player falling through floor when reset && updated LevelOne to use vector for platforms)
 };
 
 class LevelOne {
 private:
+<<<<<<< HEAD
 <<<<<<< HEAD
     std::vector<Obstacle> obstacles;
 
@@ -85,16 +91,20 @@ public:
 =======
     int stageCount = 1;
     Platform platforms[1];
+=======
+  int stageCount = 1;
+  std::vector<Rectangle> platforms;
+>>>>>>> 9fe5fc9 (fixed player falling through floor when reset && updated LevelOne to use vector for platforms)
 
 public:
-    LevelOne() : platforms{ Platform(300, 600, 1.0, 600, 10, true) } {}
-    void drawPlatforms() {
-        Platform p1(300, 600, 1.0, 600, 10, true);
-        platforms[0] = p1;
-    }
+  LevelOne() { Platform(300, 600, 1.0, 600, 10, true); }
+  void drawPlatforms() {
+    Platform p1(300, 600, 1.0, 600, 10, true);
+    Platform p2(300, 300, 1.0, 10, 600, true);
+    platforms.push_back({300, 300, 10, 600});
+    platforms.push_back({300, 600, 600, 10});
 
-    Rectangle getPlatforms() {
-        return platforms[0].getPlatform();
-    }
+  }
+  std::vector<Rectangle> getPlatforms() { return platforms; }
 };
 >>>>>>> 82ba856 (added floor platform with collision and collision methods to Player)
