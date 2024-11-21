@@ -49,8 +49,8 @@ void Player::jump() {
 #include <cstdio>
 #include <raylib.h>
 
-Player::Player(float screenWidth, float screenHeight, float x, float y, int vel)
-    : x(x), y(y), vel(vel), speed(0), canJump(false) {}
+Player::Player(int screenWidth, int screenHeight, float x, float y, int vel)
+    : screenWidth(screenWidth), screenHeight(screenHeight), x(x), y(y), vel(vel), speed(0), canJump(false) {}
 
 void Player::draw() { DrawRectangle(x, y, 60, 60, RED); }
 
@@ -75,7 +75,8 @@ void Player::update(float deltaTime) {
 }
 
 void Player::reset() {
-  y = 800 / 4;
+  y = (float)screenHeight / 4;
+  x = (float)screenWidth / 2;
   speed = 0;
 }
 void Player::resetCollisions() {
@@ -98,6 +99,6 @@ void Player::checkCollisions(bool xAxis, bool yAxis, Rectangle platform) {
   }
 }
 
-Rectangle Player::getPosition() { return {(float)x, (float)y, 60, 60}; }
+Rectangle Player::getPosition() { return {x, y, 60, 60}; }
 
 float Player::GetRectBottom(Rectangle rect) { return rect.y + rect.height; }

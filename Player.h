@@ -19,12 +19,16 @@ private:
 
 public:
 <<<<<<< HEAD
+<<<<<<< HEAD
     Player(int screenWidth, int screenHeight, float x, float y, const char* texturePath);
     ~Player();
     void update(float deltaTime);
 =======
     Player(float screenWidth, float screenHeight, float x, float y, int vel = 2);
 >>>>>>> 82ba856 (added floor platform with collision and collision methods to Player)
+=======
+    Player(int screenWidth, int screenHeight, float x, float y, int vel = 2);
+>>>>>>> aabba52 (updated Keybinds for player and added todo in Config.cpp, fixed collision for floor platform)
     void draw();
     void moveLeft();
     void moveRight();
@@ -39,8 +43,10 @@ public:
     float GetRectBottom(Rectangle rect);
 
 private:
-    int x;
-    int y;
+    float x;
+    float y;
+    int screenWidth;
+    int screenHeight;
     int vel;
     bool didHitObstacle = false;
     int hearts = 5;
