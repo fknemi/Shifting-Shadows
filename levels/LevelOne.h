@@ -97,12 +97,20 @@ public:
 >>>>>>> 9fe5fc9 (fixed player falling through floor when reset && updated LevelOne to use vector for platforms)
 
 public:
-  LevelOne() { Platform(300, 600, 1.0, 600, 10, true); }
   void drawPlatforms() {
-    Platform p1(300, 600, 1.0, 600, 10, true);
-    Platform p2(300, 300, 1.0, 10, 600, true);
+    Platform p1(300, 400, 1.0, 300, 10, true);
+    platforms.push_back({300, 400, 300, 10});
+    Platform p2(200, 500, 1.0, 200, 10, true);
+    platforms.push_back({200, 500, 200, 10});
+    Platform p3(300, 600, 1.0, 400, 10, true);
+    platforms.push_back({300, 600, 400, 10});
+    Platform p4(300, 300, 1.0, 10, 600, true);
     platforms.push_back({300, 300, 10, 600});
-    platforms.push_back({300, 600, 600, 10});
+    Platform p5(800, 300, 1.0, 10, 600, true);
+    platforms.push_back({800, 300, 10, 600});
+
+
+
 
   }
   std::vector<Rectangle> getPlatforms() { return platforms; }

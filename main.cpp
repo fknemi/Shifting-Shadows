@@ -132,8 +132,8 @@ int main() {
     std::vector<Rectangle> platforms = l1.getPlatforms();
     for (Rectangle platform : platforms) {
       if (CheckCollisionRecs(platform, player.getPosition())) {
-        DrawText("Platform Collision", 1280 / 4, 200, 80, RED);
-        player.checkCollisions(true, true, platform);
+        DrawText("Platform Collision", screenWidth * 0.1, 200, 20, RED);
+        player.checkCollisions(true, true, platform, deltaTime);
       }
     }
     if (player.getPosition().y > 800) {
