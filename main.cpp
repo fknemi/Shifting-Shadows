@@ -1,15 +1,17 @@
-#include <iostream>
 #include <raylib.h>
 #include "Player.h"
-#include "elements/inputs/Mouse.cpp"
+#include "LevelOne.h"
 
 int main() {
     const int screenWidth = 1280;
     const int screenHeight = 800;
     const int targetFPS = 60;
-    Mouse mouse;
+
     InitWindow(screenWidth, screenHeight, "Shifting Shadows");
-    Player player(screenWidth, screenHeight, screenWidth / 4, screenHeight / 2);
+
+    Player player(screenWidth, screenHeight, screenWidth / 4, screenHeight - 50, "resources/player.png");
+    LevelOne levelOne;
+
     SetTargetFPS(targetFPS);
 
     while (!WindowShouldClose()) {
@@ -18,7 +20,7 @@ int main() {
         // Update player
         player.update(deltaTime);
 
-        // Move player
+        // Player movement
         if (IsKeyDown(KEY_LEFT)) {
             player.moveLeft();
         }
@@ -28,19 +30,18 @@ int main() {
         if (IsKeyPressed(KEY_UP)) {
             player.jump();
         }
-        if (IsKeyPressed(KEY_F11)){
+        if (IsKeyPressed(KEY_F11)) {
             ToggleFullscreen();
         }
-        // Update mouse
-        mouse.update();
-                mouse.draw();
-
 
         BeginDrawing();
-        ClearBackground(BLACK);
+        ClearBackground(DARKGRAY);
+
+        // Draw the level and player
+        levelOne.draw();
+        player.draw();
 
         DrawFPS(10, 10);
-        player.draw();
 
         EndDrawing();
     }

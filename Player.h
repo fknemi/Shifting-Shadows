@@ -1,27 +1,27 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <raylib.h>
+
 class Player {
+private:
+    Vector2 position;       // Player's position
+    Vector2 velocity;       // Player's velocity
+    int screenWidth;        // Screen width for boundaries
+    int screenHeight;       // Screen height for boundaries
+    float gravity;          // Gravity affecting the player
+    float jumpForce;        // Force applied when jumping
+    int jumpCount;          // Track the number of jumps
+    Texture2D texture;      // Player sprite
+
 public:
-    Player(int screenWidth, int screenHeight, int x = 0, int y = 0, int vel = 2);
+    Player(int screenWidth, int screenHeight, float x, float y, const char* texturePath);
+    ~Player();
+    void update(float deltaTime);
     void draw();
     void moveLeft();
     void moveRight();
     void jump();
-    void update(float deltaTime);
-
-private:
-    int x;
-    int y;
-    int vel;
-    bool didHitObstacle = false;
-    int hearts = 5;
-    float tongueDelay;
-    float tongueReachLimit;
-    float speed;
-    bool canJump;
-    static constexpr float gravity = 700.0f;
-    static constexpr float jumpSpeed = 350.0f;
 };
 
-#endif // PLAYER_H
+#endif
