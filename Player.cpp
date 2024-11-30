@@ -1,39 +1,47 @@
 #include "Player.h"
 #include <raylib.h>
-#include <cstdio>
 
-Player::Player(int screenWidth, int screenHeight, int x, int y, int vel)
-    : x(x), y(y), vel(vel), speed(0), canJump(false) {
+Player::Player(int screenWidth, int screenHeight, float x, float y, const char* texturePath)
+    : screenWidth(screenWidth), screenHeight(screenHeight), gravity(300.0f), jumpForce(-400.0f) {
+    position = {x, y};
+    velocity = {0, 0};
+
+    // Load the player texture
+    texture = LoadTexture(texturePath);
 }
 
-void Player::draw() {
-    DrawRectangle(x, y, 60, 60, RED);
-}
-
-void Player::moveLeft() {
-    x -= vel;
-}
-
-void Player::moveRight() {
-    x += vel;
-}
-
-void Player::jump() {
-    if (canJump) {
-        speed = -jumpSpeed;
-        canJump = false;
-    }
+Player::~Player() {
+    // Unload the player texture when the object is destroyed
+    UnloadTexture(texture);
 }
 
 void Player::update(float deltaTime) {
     // Apply gravity
-    y += speed * deltaTime;
-    speed += gravity * deltaTime;
+    velocity.y += gravity * deltaTime;
+    position.y += velocity.y * deltaTime;
 
-    // Check if player is on the ground
-    if (y >= 600) { // Assuming the ground is at y = 600
-        y = 600;
-        speed = 0;
-        canJump = true;
+    // Prevent falling through the floor
+    if (position.y > screenHeight - texture.height) { // Adjust based on texture height
+        position.y = screenHeight - texture.height;
+        velocity.y = 0;
+        jumpCount = 0;  //Reset Jump Count
+    }
+}
+
+void Player::draw() {
+    DrawTexture(texture, position.x, position.y, WHITE); // Draw the player sprite
+}
+
+void Player::moveLeft() {
+    position.x -= 200 * GetFrameTime(); // Move left
+}
+
+void Player::moveRight() {
+    position.x += 200 * GetFrameTime(); // Move right
+}
+
+void Player::jump() {
+    if (position.y >= screenHeight - texture.height) { // Only jump if on the ground
+        velocity.y = jumpForce;
     }
 }
