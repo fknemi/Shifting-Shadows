@@ -50,23 +50,21 @@ public:
   void jump();
   void reset();
   void update(float deltaTime);
-  void checkCollisions(bool x, bool y, Rectangle platform, float deltatime);
+  void checkCollisions(bool x, bool y, Rectangle platform);
   Rectangle getPosition();
   float GetRectBottom(Rectangle rect);
 >>>>>>> d750e8c (fixed floor and wall collisions, 1 issue left)
 
 private:
-  float x;
-  float y;
+  Vector2 pos;
   int screenWidth;
   int screenHeight;
-  int width = 60;
-  int height = 60;
+  float width = 60;
+  float height = 60;
   int vel;
   bool hitFloor = false;
   bool hitLeftWall = false;
   bool hitRightWall = false;
-  int hearts = 5;
   float tongueDelay;
   float tongueReachLimit;
   float speed;

@@ -27,6 +27,7 @@ public:
 #include "vector"
 >>>>>>> 9fe5fc9 (fixed player falling through floor when reset && updated LevelOne to use vector for platforms)
 #include <raylib.h>
+<<<<<<< HEAD
 struct Platform {
   float x;
   float y;
@@ -62,6 +63,10 @@ struct Platform {
 >>>>>>> 9fe5fc9 (fixed player falling through floor when reset && updated LevelOne to use vector for platforms)
 };
 
+=======
+#include "../elements/platforms/Wall.h"
+#include "../elements/platforms/Floor.h"
+>>>>>>> 57b11f3 (seperated platforms to Wall.h and Floor.h, used vector2 for player position, removed deltatime from checkCollisions for Player)
 class LevelOne {
 private:
 <<<<<<< HEAD
@@ -98,15 +103,15 @@ public:
 
 public:
   void drawPlatforms() {
-    Platform p1(300, 400, 1.0, 300, 10, true);
+    Floor p1(300, 400, 1.0, 300, 10, true);
     platforms.push_back({300, 400, 300, 10});
-    Platform p2(200, 500, 1.0, 200, 10, true);
+    Floor p2(200, 500, 1.0, 200, 10, true);
     platforms.push_back({200, 500, 200, 10});
-    Platform p3(300, 600, 1.0, 400, 10, true);
+    Floor p3(300, 600, 1.0, 400, 10, true);
     platforms.push_back({300, 600, 400, 10});
-    Platform p4(300, 300, 1.0, 10, 600, true);
+    Wall p4(300, 300, 1.0, 10, 600, true);
     platforms.push_back({300, 300, 10, 600});
-    Platform p5(800, 300, 1.0, 10, 600, true);
+    Wall p5(800, 300, 1.0, 10, 600, true);
     platforms.push_back({800, 300, 10, 600});
 
 
