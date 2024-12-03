@@ -12,24 +12,27 @@ public:
   void jump();
   void reset();
   void update(float deltaTime);
-  void checkCollisions(bool x, bool y, Rectangle platform);
+  void checkCollisions(bool x, bool y, Rectangle platform, float deltatime);
   Rectangle getPosition();
   float GetRectBottom(Rectangle rect);
 
 private:
-  Vector2 pos;
+  float x;
+  float y;
   int screenWidth;
   int screenHeight;
-  float width = 60;
-  float height = 60;
+  int width = 60;
+  int height = 60;
   int vel;
   bool hitFloor = false;
   bool hitLeftWall = false;
   bool hitRightWall = false;
+  int hearts = 5;
   float tongueDelay;
   float tongueReachLimit;
   float speed;
   bool canJump;
+  bool isOnGround;
   std::array<int, 3> yAxisCollisionoffsets = {10, 20, 35};
   int xAxisCollisionoffset = 5;
 
