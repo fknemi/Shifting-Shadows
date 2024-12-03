@@ -52,25 +52,25 @@ void Player::jump() {
 >>>>>>> d750e8c (fixed floor and wall collisions, 1 issue left)
 #include <raylib.h>
 #include <string>
+
 Player::Player(int screenWidth, int screenHeight, float x, float y, int vel)
-    : screenWidth(screenWidth), screenHeight(screenHeight),
-      vel(vel), speed(0), canJump(false), hitFloor(false) {
-          pos.x = x;
-          pos.y = y;
+    : screenWidth(screenWidth), screenHeight(screenHeight), x(x), y(y),
+      vel(vel) {
+    canJump = true;
+    isOnGround = false;
       }
 
-void Player::draw() { DrawRectangle(pos.x, pos.y, 60, 60, RED); }
+void Player::draw() { DrawRectangle(x, y, 60, 60, RED); }
 
 void Player::moveLeft() {
   if (!hitLeftWall) {
-    pos.x -= vel;
-
+    x -= vel;
   }
 }
 
 void Player::moveRight() {
   if (!hitRightWall) {
-    pos.x += vel;
+    x += vel;
   }
 }
 
@@ -83,6 +83,7 @@ void Player::jump() {
 }
 
 void Player::update(float deltaTime) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -117,12 +118,15 @@ void Player::update(float deltaTime) {
 =======
   pos.y += speed * deltaTime;
 >>>>>>> 57b11f3 (seperated platforms to Wall.h and Floor.h, used vector2 for player position, removed deltatime from checkCollisions for Player)
+=======
+  y += speed * deltaTime;
+>>>>>>> 9ecd4bc (added basic start menu, added onGround to Player (not used))
   speed += gravity * deltaTime;
 
   DrawText("x", 1280 * 0.7, 50, 20, RED);
-  DrawText(std::to_string(pos.x).c_str(), 1280 * 0.72, 50, 20, RED);
+  DrawText(std::to_string(x).c_str(), 1280 * 0.72, 50, 20, RED);
   DrawText("y", 1280 * 0.7, 100, 20, RED);
-  DrawText(std::to_string(pos.y).c_str(), 1280 * 0.72, 100, 20, RED);
+  DrawText(std::to_string(y).c_str(), 1280 * 0.72, 100, 20, RED);
   if (hitFloor) {
     speed = 0;
     canJump = true;
@@ -138,8 +142,8 @@ void Player::update(float deltaTime) {
 }
 
 void Player::reset() {
-  pos.y = (float)screenHeight / 4;
-  pos.x = (float)screenWidth / 2;
+  y = (float)screenHeight / 4;
+  x = (float)screenWidth / 2;
   speed = 0;
   hitFloor = false;
   hitLeftWall = false;
@@ -148,20 +152,21 @@ void Player::reset() {
 
 
 // TODO: Fix Sometimes Player Can Jump While Falling
-void Player::checkCollisions(bool xAxis, bool yAxis, Rectangle platform) {
+void Player::checkCollisions(bool xAxis, bool yAxis, Rectangle platform,
+                             float deltatime) {
   // Vertical collision (y-axis)
   if (yAxis) {
-    if (pos.y + height > platform.y && pos.y + height <= platform.y + 10 &&
-        pos.x + width > platform.x && pos.x < platform.x + platform.width &&
+    if (y + height > platform.y && y + height <= platform.y + 10 &&
+        x + width > platform.x && x < platform.x + platform.width &&
         speed > 0) {
-      pos.y = platform.y - height;
+      y = platform.y - height;
       speed = 0;
       hitFloor = true;
-    } else if (pos.y - yAxisCollisionoffsets[1] < platform.y + platform.height &&
-               pos.y + height - yAxisCollisionoffsets[2] > platform.y + platform.height &&
-               pos.x + width - yAxisCollisionoffsets[2] > platform.x && pos.x < platform.x + platform.width &&
+    } else if (y - yAxisCollisionoffsets[1] < platform.y + platform.height &&
+               y + height - yAxisCollisionoffsets[2] > platform.y + platform.height &&
+               x + width - yAxisCollisionoffsets[2] > platform.x && x < platform.x + platform.width &&
                speed < 0) {
-      pos.y = platform.y + platform.height;
+      y = platform.y + platform.height;
       speed = 0;
     } else {
       hitFloor = false;
@@ -170,17 +175,17 @@ void Player::checkCollisions(bool xAxis, bool yAxis, Rectangle platform) {
 
   // Horizontal collision (x-axis)
   if (xAxis) {
-    if (pos.x + width + xAxisCollisionoffset > platform.x &&
-        pos.x - xAxisCollisionoffset < platform.x && 
-        pos.y + height > platform.y && pos.y < platform.y + platform.height) {
-      pos.x = platform.x - width;
+    if (x + width + xAxisCollisionoffset > platform.x &&
+        x - xAxisCollisionoffset < platform.x && 
+        y + height > platform.y && y < platform.y + platform.height) {
+      x = platform.x - width;
       hitLeftWall = true;
-    } else if (pos.x < platform.x + platform.width &&
-               pos.x + width >
+    } else if (x < platform.x + platform.width &&
+               x + width >
                    platform.x + platform.width && 
-               pos.y + height > platform.y &&
-               pos.y < platform.y + platform.height) {
-      pos.x = platform.x + platform.width;
+               y + height > platform.y &&
+               y < platform.y + platform.height) {
+      x = platform.x + platform.width;
       hitRightWall = true;
     } else {
       hitLeftWall = false;
@@ -189,6 +194,6 @@ void Player::checkCollisions(bool xAxis, bool yAxis, Rectangle platform) {
   }
 }
 
-Rectangle Player::getPosition() { return {pos.x, pos.y, width, height}; }
+Rectangle Player::getPosition() { return {x, y, 60, 60}; }
 
 float Player::GetRectBottom(Rectangle rect) { return rect.y + rect.height; }

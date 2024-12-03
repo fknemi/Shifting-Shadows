@@ -4,6 +4,7 @@
 #define LEVELONE_H
 
 #include <raylib.h>
+<<<<<<< HEAD
 #include <vector>
 
 class Obstacle {
@@ -28,6 +29,8 @@ public:
 >>>>>>> 9fe5fc9 (fixed player falling through floor when reset && updated LevelOne to use vector for platforms)
 #include <raylib.h>
 <<<<<<< HEAD
+=======
+>>>>>>> 9ecd4bc (added basic start menu, added onGround to Player (not used))
 struct Platform {
   float x;
   float y;
@@ -53,6 +56,7 @@ struct Platform {
   void draw() { DrawRectangle(x, y, width, height, GREEN); }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // Function to get the platform's rectangle
     Rectangle getPlatform() {
         return platform;
@@ -67,6 +71,11 @@ struct Platform {
 #include "../elements/platforms/Wall.h"
 #include "../elements/platforms/Floor.h"
 >>>>>>> 57b11f3 (seperated platforms to Wall.h and Floor.h, used vector2 for player position, removed deltatime from checkCollisions for Player)
+=======
+  // Function to get the platform's rectangle
+};
+
+>>>>>>> 9ecd4bc (added basic start menu, added onGround to Player (not used))
 class LevelOne {
 private:
 <<<<<<< HEAD
@@ -103,15 +112,15 @@ public:
 
 public:
   void drawPlatforms() {
-    Floor p1(300, 400, 1.0, 300, 10, true);
+    Platform p1(300, 400, 1.0, 300, 10, true);
     platforms.push_back({300, 400, 300, 10});
-    Floor p2(200, 500, 1.0, 200, 10, true);
+    Platform p2(200, 500, 1.0, 200, 10, true);
     platforms.push_back({200, 500, 200, 10});
-    Floor p3(300, 600, 1.0, 400, 10, true);
+    Platform p3(300, 600, 1.0, 400, 10, true);
     platforms.push_back({300, 600, 400, 10});
-    Wall p4(300, 300, 1.0, 10, 600, true);
+    Platform p4(300, 300, 1.0, 10, 600, true);
     platforms.push_back({300, 300, 10, 600});
-    Wall p5(800, 300, 1.0, 10, 600, true);
+    Platform p5(800, 300, 1.0, 10, 600, true);
     platforms.push_back({800, 300, 10, 600});
 
 
