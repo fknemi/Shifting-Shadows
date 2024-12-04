@@ -1,49 +1,53 @@
-#ifndef LEVELONE_H
-#define LEVELONE_H
-
+#include "vector"
 #include <raylib.h>
-#include <vector>
+struct Platform {
+  float x;
+  float y;
+  float opacity;
+  float width;
+  float height;
+  bool enabledCollision;
+  bool isVisibleToPlayer;
+  bool drawPlatform;
 
-class Obstacle {
-public:
-    Vector2 position;
-    Texture2D texture;
-
-    Obstacle(Vector2 pos, const char* texturePath) {
-        position = pos;
-        texture = LoadTexture(texturePath);
+  // Constructor to initialize the struct
+  Platform(int x, int y, float opacity, float width, float height,
+           bool enabledCollision)
+      : x(x), y(y), opacity(opacity), width(width), height(height),
+        enabledCollision(enabledCollision), isVisibleToPlayer(true),
+        drawPlatform(true) {
+    if (drawPlatform) {
+      draw();
     }
+  }
 
-    ~Obstacle() {
-        UnloadTexture(texture);
-    }
+  // Draw function to draw the platform
+  void draw() { DrawRectangle(x, y, width, height, GREEN); }
 
-    void draw() {
-        DrawTexture(texture, position.x, position.y, WHITE);
-    }
+  // Function to get the platform's rectangle
 };
 
 class LevelOne {
 private:
-    std::vector<Obstacle> obstacles;
+  int stageCount = 1;
+  std::vector<Rectangle> platforms;
 
 public:
-    LevelOne() {
-        // Add obstacles
-        obstacles.push_back(Obstacle({300, 600}, "resources/tree.png")); // Tree
-        obstacles.push_back(Obstacle({500, 650}, "resources/animal.png")); // Animal
-        obstacles.push_back(Obstacle({800, 700}, "resources/bomb.png")); // Bomb
-    }
+  void drawPlatforms() {
+    Platform p1(300, 400, 1.0, 300, 10, true);
+    platforms.push_back({300, 400, 300, 10});
+    Platform p2(200, 500, 1.0, 200, 10, true);
+    platforms.push_back({200, 500, 200, 10});
+    Platform p3(300, 600, 1.0, 400, 10, true);
+    platforms.push_back({300, 600, 400, 10});
+    Platform p4(300, 300, 1.0, 10, 600, true);
+    platforms.push_back({300, 300, 10, 600});
+    Platform p5(800, 300, 1.0, 10, 600, true);
+    platforms.push_back({800, 300, 10, 600});
 
-    void draw() {
-        for (auto& obstacle : obstacles) {
-            obstacle.draw();
-        }
-    }
 
-    const std::vector<Obstacle>& getObstacles() const {
-        return obstacles;
-    }
+
+
+  }
+  std::vector<Rectangle> getPlatforms() { return platforms; }
 };
-
-#endif

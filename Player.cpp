@@ -1,47 +1,110 @@
 #include "Player.h"
 #include <raylib.h>
+#include <string>
 
-Player::Player(int screenWidth, int screenHeight, float x, float y, const char* texturePath)
-    : screenWidth(screenWidth), screenHeight(screenHeight), gravity(300.0f), jumpForce(-400.0f) {
-    position = {x, y};
-    velocity = {0, 0};
+Player::Player(int screenWidth, int screenHeight, float x, float y, int vel)
+    : screenWidth(screenWidth), screenHeight(screenHeight), x(x), y(y),
+      vel(vel) {
+    canJump = true;
+    isOnGround = false;
+      }
 
-    // Load the player texture
-    texture = LoadTexture(texturePath);
-}
-
-Player::~Player() {
-    // Unload the player texture when the object is destroyed
-    UnloadTexture(texture);
-}
-
-void Player::update(float deltaTime) {
-    // Apply gravity
-    velocity.y += gravity * deltaTime;
-    position.y += velocity.y * deltaTime;
-
-    // Prevent falling through the floor
-    if (position.y > screenHeight - texture.height) { // Adjust based on texture height
-        position.y = screenHeight - texture.height;
-        velocity.y = 0;
-        jumpCount = 0;  //Reset Jump Count
-    }
-}
-
-void Player::draw() {
-    DrawTexture(texture, position.x, position.y, WHITE); // Draw the player sprite
-}
+void Player::draw() { DrawRectangle(x, y, 60, 60, RED); }
 
 void Player::moveLeft() {
-    position.x -= 200 * GetFrameTime(); // Move left
+  if (!hitLeftWall) {
+    x -= vel;
+  }
 }
 
 void Player::moveRight() {
-    position.x += 200 * GetFrameTime(); // Move right
+  if (!hitRightWall) {
+    x += vel;
+  }
 }
 
 void Player::jump() {
-    if (position.y >= screenHeight - texture.height) { // Only jump if on the ground
-        velocity.y = jumpForce;
-    }
+  if (canJump) {
+    speed = -jumpSpeed;
+    canJump = false;
+    hitFloor = false;
+  }
 }
+
+void Player::update(float deltaTime) {
+  y += speed * deltaTime;
+  speed += gravity * deltaTime;
+
+  DrawText("x", 1280 * 0.7, 50, 20, RED);
+  DrawText(std::to_string(x).c_str(), 1280 * 0.72, 50, 20, RED);
+  DrawText("y", 1280 * 0.7, 100, 20, RED);
+  DrawText(std::to_string(y).c_str(), 1280 * 0.72, 100, 20, RED);
+  if (hitFloor) {
+    speed = 0;
+    canJump = true;
+    hitFloor = false;
+  }
+  if (hitRightWall) {
+    hitRightWall = false;
+  }
+  if (hitLeftWall) {
+    hitLeftWall = false;
+  }
+}
+
+void Player::reset() {
+  y = (float)screenHeight / 4;
+  x = (float)screenWidth / 2;
+  speed = 0;
+  hitFloor = false;
+  hitLeftWall = false;
+  hitRightWall = false;
+}
+
+
+// TODO: Fix Sometimes Player Can Jump While Falling
+void Player::checkCollisions(bool xAxis, bool yAxis, Rectangle platform,
+                             float deltatime) {
+  // Vertical collision (y-axis)
+  if (yAxis) {
+    if (y + height > platform.y && y + height <= platform.y + 10 &&
+        x + width > platform.x && x < platform.x + platform.width &&
+        speed > 0) {
+      y = platform.y - height;
+      speed = 0;
+      hitFloor = true;
+    } else if (y - yAxisCollisionoffsets[1] < platform.y + platform.height &&
+               y + height - yAxisCollisionoffsets[2] > platform.y + platform.height &&
+               x + width - yAxisCollisionoffsets[2] > platform.x && x < platform.x + platform.width &&
+               speed < 0) {
+      y = platform.y + platform.height;
+      speed = 0;
+    } else {
+      hitFloor = false;
+    }
+  }
+
+  // Horizontal collision (x-axis)
+  if (xAxis) {
+    if (x + width + xAxisCollisionoffset > platform.x &&
+        x - xAxisCollisionoffset < platform.x && 
+        y + height > platform.y && y < platform.y + platform.height) {
+      x = platform.x - width;
+      hitLeftWall = true;
+    } else if (x < platform.x + platform.width &&
+               x + width >
+                   platform.x + platform.width && 
+               y + height > platform.y &&
+               y < platform.y + platform.height) {
+      x = platform.x + platform.width;
+      hitRightWall = true;
+    } else {
+      hitLeftWall = false;
+      hitRightWall = false;
+    }
+  }
+}
+
+Rectangle Player::getPosition() { return {x, y, 60, 60}; }
+
+float Player::GetRectBottom(Rectangle rect) { return rect.y + rect.height; }
