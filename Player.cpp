@@ -7,9 +7,14 @@ Player::Player(int screenWidth, int screenHeight, float x, float y, int vel)
       vel(vel) {
     canJump = true;
     isOnGround = false;
+    // Load player texture
+    texture = LoadTexture("resources/player.png");
+    if (texture.id == 0) {
+    TraceLog(LOG_ERROR, "Failed to load texture: assets/player_sprite.png");
+}
       }
 
-void Player::draw() { DrawRectangle(x, y, 60, 60, RED); }
+void Player::draw() { DrawTexture(texture, (int)x, (int)y, WHITE); }
 
 void Player::moveLeft() {
   if (!hitLeftWall) {
