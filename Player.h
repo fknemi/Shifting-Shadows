@@ -13,7 +13,6 @@ private:
     Vector2 velocity;       // Player's velocity
     int screenWidth;        // Screen width for boundaries
     int screenHeight;       // Screen height for boundaries
-    float gravity;          // Gravity affecting the player
     float jumpForce;        // Force applied when jumping
     int jumpCount;          // Track the number of jumps
     Texture2D texture;      // Player sprite
@@ -58,8 +57,6 @@ public:
 private:
   float x;
   float y;
-  int screenWidth;
-  int screenHeight;
   int width = 60;
   int height = 60;
   int vel;
@@ -74,12 +71,16 @@ private:
   bool isOnGround;
   std::array<int, 3> yAxisCollisionoffsets = {10, 20, 35};
   int xAxisCollisionoffset = 5;
+<<<<<<< HEAD
 
 <<<<<<< HEAD
     static constexpr float gravity = 700.0f;
     static constexpr float jumpSpeed = 350.0f;
 >>>>>>> 82ba856 (added floor platform with collision and collision methods to Player)
 =======
+=======
+  
+>>>>>>> 517c71c (2D camera update)
   static constexpr float gravity = 700.0f;
   static constexpr float jumpSpeed = 500.0f;
 >>>>>>> d750e8c (fixed floor and wall collisions, 1 issue left)

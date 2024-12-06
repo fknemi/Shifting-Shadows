@@ -76,6 +76,14 @@ int main() {
   InitWindow(screenWidth, screenHeight, "Shifting Shadows");
   SetTargetFPS(targetFPS);
 
+   // Initialize camera
+  Camera2D camera = {0};
+  camera.target = (Vector2){player.getPosition().x + player.getPosition().width / 2, 
+                            player.getPosition().y + player.getPosition().height / 2};
+  camera.offset = (Vector2){screenWidth / 2, screenHeight / 2};
+  camera.zoom = 1.0f;
+
+
   while (!WindowShouldClose()) {
     float deltaTime = GetFrameTime();
     
@@ -83,6 +91,15 @@ int main() {
     // Update player
     player.update(deltaTime);
     mouse.update();
+
+    // Update camera target to follow the player
+    camera.target = (Vector2){player.getPosition().x + player.getPosition().width / 2, 
+                              player.getPosition().y + player.getPosition().height / 2};
+    
+    BeginDrawing();
+    ClearBackground(BLACK);
+
+  BeginMode2D(camera); // Apply the camera transformation
 
 if(startMenu.getStatus() == false){
 startMenu.draw();
@@ -161,12 +178,18 @@ if(startMenu.getStatus() && startMenu.getCurrentLevel() == 1){
     if (player.getPosition().y > 800) {
       player.reset();
     }
+<<<<<<< HEAD
 >>>>>>> 9fe5fc9 (fixed player falling through floor when reset && updated LevelOne to use vector for platforms)
 
     BeginDrawing();
     ClearBackground(BLACK);
 >>>>>>> aabba52 (updated Keybinds for player and added todo in Config.cpp, fixed collision for floor platform)
 
+=======
+    
+    EndMode2D(); // End the camera transformation
+    
+>>>>>>> 517c71c (2D camera update)
     DrawFPS(10, 10);
 
     EndDrawing();
