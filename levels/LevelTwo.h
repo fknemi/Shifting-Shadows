@@ -2,18 +2,18 @@
 #include "vector"
 #include <raylib.h>
 
-#ifndef LEVELONE_H
-#define LEVELONE_H
+#ifndef LEVELTWO_H
+#define LEVELTWO_H
 
 #include "Level.h" // Make sure you're including the base class header
 
-class LevelOne : public Level {
+class LevelTwo : public Level {
 private:
-  int stageCount = 1;
+  int stageCount = 2;
   std::vector<Rectangle> platforms;
 
 public:
-  LevelOne() {
+  LevelTwo() {
     platforms.push_back({100, 200, 200, 10}); // Example platform
   }
 
@@ -26,8 +26,8 @@ public:
   std::vector<Rectangle> getPlatforms() override { return platforms; }
 
   void update() override {
-    // Update logic specific to LevelOne
+    // Update logic specific to LevelTwo
   }
 };
 
-#endif // LEVELONE_H
+#endif // LEVELTWO_H
