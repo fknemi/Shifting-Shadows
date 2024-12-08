@@ -27,6 +27,8 @@ int main() {
                 (float)screenHeight / 2);
   Mouse mouse;
   StartMenu startMenu;
+  Level *level = nullptr;
+
   InitWindow(screenWidth, screenHeight, "Shifting Shadows");
   SetTargetFPS(targetFPS);
 
@@ -62,7 +64,6 @@ int main() {
       player.draw();
       mouse.draw();
     }
-    Level *level = nullptr;
     if (startMenu.getStatus()) {
       switch (startMenu.getCurrentLevel()) {
       case 1:
@@ -102,6 +103,17 @@ int main() {
         level = new LevelTwelve();
         break;
       }
+
+      std::vector<Rectangle> platforms = level->getPlatforms();
+      for (Rectangle platform : platforms) {
+        if (CheckCollisionRecs(platform, player.getPosition())) {
+          DrawText("Platform Collision", screenWidth * 0.1, 200, 20, RED);
+          player.checkCollisions(true, true, platform, deltaTime);
+        }
+      }
+      if (player.getPosition().y > 800) {
+        player.reset();
+      }
     }
     // Move player
     if (IsKeyDown(Keybinds["MOVE LEFT"].CurrentKeybind)) {
@@ -124,16 +136,6 @@ int main() {
     }
     if (IsKeyPressed(Keybinds["CONTINUE"].CurrentKeybind)) {
       startMenu.hideMenu();
-    }
-    std::vector<Rectangle> platforms = level->getPlatforms();
-    for (Rectangle platform : platforms) {
-      if (CheckCollisionRecs(platform, player.getPosition())) {
-        DrawText("Platform Collision", screenWidth * 0.1, 200, 20, RED);
-        player.checkCollisions(true, true, platform, deltaTime);
-      }
-    }
-    if (player.getPosition().y > 800) {
-      player.reset();
     }
 
     EndMode2D(); // End the camera transformation
