@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef LEVELONE_H
 #define LEVELONE_H
 
@@ -40,21 +41,18 @@ struct Platform {
   bool enabledCollision;
   bool isVisibleToPlayer;
   bool drawPlatform;
+=======
+#include "Level.h"
+#include "vector"
+#include <raylib.h>
+>>>>>>> b847e32 (added files for all levels and removed broken texture causing seg fault)
 
-  // Constructor to initialize the struct
-  Platform(int x, int y, float opacity, float width, float height,
-           bool enabledCollision)
-      : x(x), y(y), opacity(opacity), width(width), height(height),
-        enabledCollision(enabledCollision), isVisibleToPlayer(true),
-        drawPlatform(true) {
-    if (drawPlatform) {
-      draw();
-    }
-  }
+#ifndef LEVELONE_H
+#define LEVELONE_H
 
-  // Draw function to draw the platform
-  void draw() { DrawRectangle(x, y, width, height, GREEN); }
+#include "Level.h" // Make sure you're including the base class header
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     // Function to get the platform's rectangle
@@ -77,6 +75,9 @@ struct Platform {
 
 >>>>>>> 9ecd4bc (added basic start menu, added onGround to Player (not used))
 class LevelOne {
+=======
+class LevelOne : public Level {
+>>>>>>> b847e32 (added files for all levels and removed broken texture causing seg fault)
 private:
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -111,22 +112,25 @@ public:
 >>>>>>> 9fe5fc9 (fixed player falling through floor when reset && updated LevelOne to use vector for platforms)
 
 public:
-  void drawPlatforms() {
-    Platform p1(300, 400, 1.0, 300, 10, true);
-    platforms.push_back({300, 400, 300, 10});
-    Platform p2(200, 500, 1.0, 200, 10, true);
-    platforms.push_back({200, 500, 200, 10});
-    Platform p3(300, 600, 1.0, 400, 10, true);
-    platforms.push_back({300, 600, 400, 10});
-    Platform p4(300, 300, 1.0, 10, 600, true);
-    platforms.push_back({300, 300, 10, 600});
-    Platform p5(800, 300, 1.0, 10, 600, true);
-    platforms.push_back({800, 300, 10, 600});
-
-
-
-
+  LevelOne() {
+    platforms.push_back({100, 200, 200, 10}); // Example platform
   }
-  std::vector<Rectangle> getPlatforms() { return platforms; }
+
+  void drawPlatforms() override {
+    for (const auto &platform : platforms) {
+      DrawRectangleRec(platform, BLUE);
+    }
+  }
+
+  std::vector<Rectangle> getPlatforms() override { return platforms; }
+
+  void update() override {
+    // Update logic specific to LevelOne
+  }
 };
+<<<<<<< HEAD
 >>>>>>> 82ba856 (added floor platform with collision and collision methods to Player)
+=======
+
+#endif // LEVELONE_H
+>>>>>>> b847e32 (added files for all levels and removed broken texture causing seg fault)
