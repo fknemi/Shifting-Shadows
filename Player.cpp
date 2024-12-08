@@ -5,16 +5,16 @@
 Player::Player(int screenWidth, int screenHeight, float x, float y, int vel)
     : screenWidth(screenWidth), screenHeight(screenHeight), x(x), y(y),
       vel(vel) {
-    canJump = true;
-    isOnGround = false;
-    // Load player texture
-    texture = LoadTexture("resources/player.png");
-    if (texture.id == 0) {
-    TraceLog(LOG_ERROR, "Failed to load texture: assets/player_sprite.png");
+  canJump = true;
+  isOnGround = false;
+  // Load player texture
+  //   texture = LoadTexture("resources/player.png");
 }
-      }
 
-void Player::draw() { DrawTexture(texture, (int)x, (int)y, WHITE); }
+void Player::draw() {
+  // DrawTexture(texture, (int)x, (int)y, WHITE);
+  DrawRectangle(x, y, 60, 60, RED);
+}
 
 void Player::moveLeft() {
   if (!hitLeftWall) {
@@ -66,6 +66,7 @@ void Player::reset() {
   hitRightWall = false;
 }
 
+// TODO: Fix Sometimes Player Can Jump While Falling
 
 // TODO: Fix Sometimes Player Can Jump While Falling
 void Player::checkCollisions(bool xAxis, bool yAxis, Rectangle platform,
@@ -79,9 +80,10 @@ void Player::checkCollisions(bool xAxis, bool yAxis, Rectangle platform,
       speed = 0;
       hitFloor = true;
     } else if (y - yAxisCollisionoffsets[1] < platform.y + platform.height &&
-               y + height - yAxisCollisionoffsets[2] > platform.y + platform.height &&
-               x + width - yAxisCollisionoffsets[2] > platform.x && x < platform.x + platform.width &&
-               speed < 0) {
+               y + height - yAxisCollisionoffsets[2] >
+                   platform.y + platform.height &&
+               x + width - yAxisCollisionoffsets[2] > platform.x &&
+               x < platform.x + platform.width && speed < 0) {
       y = platform.y + platform.height;
       speed = 0;
     } else {
@@ -92,15 +94,13 @@ void Player::checkCollisions(bool xAxis, bool yAxis, Rectangle platform,
   // Horizontal collision (x-axis)
   if (xAxis) {
     if (x + width + xAxisCollisionoffset > platform.x &&
-        x - xAxisCollisionoffset < platform.x && 
-        y + height > platform.y && y < platform.y + platform.height) {
+        x - xAxisCollisionoffset < platform.x && y + height > platform.y &&
+        y < platform.y + platform.height) {
       x = platform.x - width;
       hitLeftWall = true;
     } else if (x < platform.x + platform.width &&
-               x + width >
-                   platform.x + platform.width && 
-               y + height > platform.y &&
-               y < platform.y + platform.height) {
+               x + width > platform.x + platform.width &&
+               y + height > platform.y && y < platform.y + platform.height) {
       x = platform.x + platform.width;
       hitRightWall = true;
     } else {
