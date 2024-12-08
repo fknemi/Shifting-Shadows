@@ -9,7 +9,7 @@
 
 class LevelSix : public Level {
 private:
-  int stageCount = 1;
+  int stageCount = 6;
   std::vector<Rectangle> platforms;
 
 public:

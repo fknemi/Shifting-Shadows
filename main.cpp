@@ -94,6 +94,8 @@ int main() {
 =======
 >>>>>>> b847e32 (added files for all levels and removed broken texture causing seg fault)
   StartMenu startMenu;
+  Level *level = nullptr;
+
   InitWindow(screenWidth, screenHeight, "Shifting Shadows");
   SetTargetFPS(targetFPS);
 
@@ -134,7 +136,6 @@ int main() {
       player.draw();
       mouse.draw();
     }
-    Level *level = nullptr;
     if (startMenu.getStatus()) {
       switch (startMenu.getCurrentLevel()) {
       case 1:
@@ -173,6 +174,17 @@ int main() {
       case 12:
         level = new LevelTwelve();
         break;
+      }
+
+      std::vector<Rectangle> platforms = level->getPlatforms();
+      for (Rectangle platform : platforms) {
+        if (CheckCollisionRecs(platform, player.getPosition())) {
+          DrawText("Platform Collision", screenWidth * 0.1, 200, 20, RED);
+          player.checkCollisions(true, true, platform, deltaTime);
+        }
+      }
+      if (player.getPosition().y > 800) {
+        player.reset();
       }
     }
     // Move player
@@ -228,6 +240,7 @@ int main() {
     if (IsKeyPressed(Keybinds["CONTINUE"].CurrentKeybind)) {
       startMenu.hideMenu();
     }
+<<<<<<< HEAD
     std::vector<Rectangle> platforms = level->getPlatforms();
     for (Rectangle platform : platforms) {
       if (CheckCollisionRecs(platform, player.getPosition())) {
@@ -252,6 +265,8 @@ int main() {
     
 >>>>>>> 517c71c (2D camera update)
 =======
+=======
+>>>>>>> 091db9e (updated stageCount for all levels, fixed seg fault due to platforms in main.cpp)
 
     EndMode2D(); // End the camera transformation
 
