@@ -23,8 +23,7 @@ int main() {
   const float screenWidth = 1280;
   const float screenHeight = 800;
   const int targetFPS = 60;
-  Player player(screenWidth, screenHeight, (float)screenWidth / 4,
-                (float)screenHeight / 2);
+  Player *player = nullptr;
   Mouse mouse;
   StartMenu startMenu;
   Level *level = nullptr;
@@ -34,9 +33,6 @@ int main() {
 
   // Initialize camera
   Camera2D camera = {0};
-  camera.target =
-      (Vector2){player.getPosition().x + player.getPosition().width / 2,
-                player.getPosition().y + player.getPosition().height / 2};
   camera.offset = (Vector2){screenWidth / 2, screenHeight / 2};
   camera.zoom = 1.0f;
 
@@ -44,27 +40,29 @@ int main() {
     float deltaTime = GetFrameTime();
 
     // Update player
-    player.update(deltaTime);
-    mouse.update();
-
     // Update camera target to follow the player
-    camera.target =
-        (Vector2){player.getPosition().x + player.getPosition().width / 2,
-                  player.getPosition().y + player.getPosition().height / 2};
-
     BeginDrawing();
     ClearBackground(BLACK);
 
     BeginMode2D(camera); // Apply the camera transformation
 
-    if (startMenu.getStatus() == false) {
+    // startMenu.getStatus() if false player is in menu
+    if (!startMenu.getStatus()) {
       startMenu.draw();
-
-    } else {
-      player.draw();
-      mouse.draw();
     }
+    // startMenu.getStatus() if true player then the game is started
     if (startMenu.getStatus()) {
+      player = new Player(screenWidth, screenHeight, (float)screenWidth / 4,
+                          (float)screenHeight / 2);
+
+      camera.target =
+          (Vector2){player->getPosition().x + player->getPosition().width / 2,
+                    player->getPosition().y + player->getPosition().height / 2};
+      player->update(deltaTime);
+      mouse.update();
+      player->draw();
+      mouse.draw();
+
       switch (startMenu.getCurrentLevel()) {
       case 1:
         level = new LevelOne();
@@ -106,34 +104,37 @@ int main() {
 
       std::vector<Rectangle> platforms = level->getPlatforms();
       for (Rectangle platform : platforms) {
-        if (CheckCollisionRecs(platform, player.getPosition())) {
+        if (CheckCollisionRecs(platform, player->getPosition())) {
           DrawText("Platform Collision", screenWidth * 0.1, 200, 20, RED);
-          player.checkCollisions(true, true, platform, deltaTime);
+          player->checkCollisions(true, true, platform, deltaTime);
         }
       }
-      if (player.getPosition().y > 800) {
-        player.reset();
+      if (player->getPosition().y > 800) {
+        player->reset();
+      }
+
+      if (IsKeyDown(Keybinds["MOVE LEFT"].CurrentKeybind)) {
+        player->moveLeft();
+      }
+      if (IsKeyDown(Keybinds["MOVE RIGHT"].CurrentKeybind)) {
+        player->moveRight();
+      }
+      if (IsKeyPressed(Keybinds["JUMP"].CurrentKeybind)) {
+        player->jump();
+      }
+      if (IsKeyPressed(Keybinds["TOGGLE FULLSCREEN"].CurrentKeybind)) {
+        ToggleFullscreen();
+      }
+      if (IsKeyPressed(Keybinds["CAMOUFLAGE"].CurrentKeybind)) {
+      }
+      if (IsKeyPressed(Keybinds["USE TONGUE"].CurrentKeybind)) {
+      }
+      if (IsKeyPressed(Keybinds["GRAB TONGUE"].CurrentKeybind)) {
       }
     }
-    // Move player
-    if (IsKeyDown(Keybinds["MOVE LEFT"].CurrentKeybind)) {
-      player.moveLeft();
-    }
-    if (IsKeyDown(Keybinds["MOVE RIGHT"].CurrentKeybind)) {
-      player.moveRight();
-    }
-    if (IsKeyPressed(Keybinds["JUMP"].CurrentKeybind)) {
-      player.jump();
-    }
-    if (IsKeyPressed(Keybinds["TOGGLE FULLSCREEN"].CurrentKeybind)) {
-      ToggleFullscreen();
-    }
-    if (IsKeyPressed(Keybinds["CAMOUFLAGE"].CurrentKeybind)) {
-    }
-    if (IsKeyPressed(Keybinds["USE TONGUE"].CurrentKeybind)) {
-    }
-    if (IsKeyPressed(Keybinds["GRAB TONGUE"].CurrentKeybind)) {
-    }
+
+    // Move play->r
+
     if (IsKeyPressed(Keybinds["CONTINUE"].CurrentKeybind)) {
       startMenu.hideMenu();
     }
