@@ -17,7 +17,6 @@
 #include "levels/LevelThree.h"
 #include "levels/LevelTwelve.h"
 #include "levels/LevelTwo.h"
-#include "settings/Config.cpp"
 #include "settings/Keybinds.cpp"
 #include <raylib.h>
 
@@ -28,7 +27,6 @@ int main() {
   Player *player = nullptr;
   Mouse mouse;
   Level *level = nullptr;
-  Config config;
 
   InitWindow(screenWidth, screenHeight, "Shifting Shadows");
   SetTargetFPS(targetFPS);
@@ -40,74 +38,42 @@ int main() {
   StartMenu startMenu;
   Button settingsBtn =
       Button("assets/menu/settings.png",
-             {-screenWidth * (float)0.1, screenHeight * (float)0.001}, 0.8);
+             {-screenWidth * (float)0.1, screenHeight * (float)0.001});
   Button selectLevelBtn =
       Button("assets/menu/select-level.png",
-             {-screenWidth * (float)0.1, -screenHeight * (float)0.15}, 0.8);
-  Button *muteBtn =
-      new Button("assets/menu/unmute.png",
-                 {screenWidth * (float)0.43, screenHeight * (float)0.4}, 0.8);
-  Button *unmuteBtn =
-      new Button("assets/menu/mute.png",
-                 {screenWidth * (float)0.43, screenHeight * (float)0.4}, 0.8);
+             {-screenWidth * (float)0.1, -screenHeight * (float)0.15});
+  Button muteBtn =
+      Button("assets/menu/mute.png",
+             {screenWidth * (float)0.5, screenHeight * (float)0.4});
+  Button unmuteBtn =
+      Button("assets/menu/mute.png",
+             {-screenWidth * (float)0.1, -screenHeight * (float)0.15});
 
-  Button exitBtn =
-      Button("assets/menu/exit.png",
-             {-screenWidth * (float)0.1, screenHeight * (float)0.35}, 0.8);
+  Button exitBtn = Button("assets/menu/exit.png", {-screenWidth * (float)0.1,
+                                                   screenHeight * (float)0.35});
   Button backBtn =
       Button("assets/menu/back.png",
-             {-screenWidth * (float)0.1, -screenHeight * (float)0.15}, 0.8);
-  Button title =
-      Button("assets/menu/title.png",
-             {-screenWidth * (float)0.2, -screenHeight * (float)0.5}, 0.8);
-   Button platform   =
-      Button("assets/LevelOne/platform.png",
-             {0,0}, 0.8);
-   
+             {-screenWidth * (float)0.1, -screenHeight * (float)0.15});
+
   while (!WindowShouldClose()) {
     float deltaTime = GetFrameTime();
 
     // Update player
+    // Update camera target to follow the player
     BeginDrawing();
     ClearBackground(LIGHTGRAY);
 
     BeginMode2D(camera); // Apply the camera transformation
 
     // startMenu.getStatus() if false player is in menu
-    if (startMenu.getStatus() == 0) {
+    if (!startMenu.getStatus()) {
       selectLevelBtn.draw();
       settingsBtn.draw();
       exitBtn.draw();
-      muteBtn->draw();
-      title.draw();
-      bool mousePressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
-      Vector2 mousePos = GetMousePosition();
-      DrawCircle(mousePos.x, mousePos.y, 5,
-                 BLUE); // Visualize the mouse position
-      if (exitBtn.isPressed(mousePos, mousePressed)) {
-        CloseWindow();
-        return 0;
-      }
-      if (settingsBtn.isPressed(mousePos, mousePressed)) {
-      }
-
-      if (muteBtn->isPressed(mousePos, mousePressed)) {
-        if (config.Audio["MasterVolume"] > 0) {
-          // Set volume to 0 and switch to mute button
-          config.Audio["MasterVolume"] = 0;
-          std::swap(muteBtn, unmuteBtn);
-        } else {
-          // Restore volume and switch to unmute button
-          config.Audio["MasterVolume"] = 0.8f;
-          std::swap(muteBtn, unmuteBtn);
-        }
-      }
-      if (selectLevelBtn.isPressed(mousePos, mousePressed)) {
-        startMenu.hideMenu();
-      }
+      muteBtn.draw();
     }
-    // startMenu.getStatus() if 4 player then the game is started
-    if (startMenu.getStatus() == 3) {
+    // startMenu.getStatus() if true player then the game is started
+    if (startMenu.getStatus()) {
       player = new Player(screenWidth, screenHeight, (float)screenWidth / 4,
                           (float)screenHeight / 2);
 
@@ -118,14 +84,11 @@ int main() {
       mouse.update();
       player->draw();
       mouse.draw();
-  
+
       switch (startMenu.getCurrentLevel()) {
       case 1:
         level = new LevelOne();
-        platform.draw();
- 
-
-             break;
+        break;
       case 2:
         level = new LevelTwo();
         break;

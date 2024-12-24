@@ -43,7 +43,7 @@ private:
   std::array<int, 3> yAxisCollisionoffsets = {10, 20, 35};
   int xAxisCollisionoffset = 5;
   
-  static constexpr float gravity = 700.0f;
+  static constexpr float gravity = 0;
   static constexpr float jumpSpeed = 500.0f;
 };
 

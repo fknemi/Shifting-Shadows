@@ -5,11 +5,11 @@
 
 class Mouse {
 public:
-    void update(); // Update the mouse position
-    void draw();   // Draw a circle at the mouse position
-private:
-    Vector2 position = { 0, 0 }; // Stores the current mouse position
-    // Hide the system mouse
+  void update();             // Update the mouse position
+  void draw();               // Draw a circle at the mouse position
+  Vector2 position = GetMousePosition(); // Stores the current mouse position
+
+  // Hide the system mouse
 };
 
 #endif // MOUSE_H

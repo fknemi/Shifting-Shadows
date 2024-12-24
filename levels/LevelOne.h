@@ -15,7 +15,7 @@ private:
 public:
   LevelOne() {
     platforms.push_back({100, 200, 200, 10}); // Example platform
-  }
+    }
 
   void drawPlatforms() override {
     for (const auto &platform : platforms) {
