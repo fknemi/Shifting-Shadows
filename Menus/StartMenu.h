@@ -9,6 +9,7 @@ public:
   bool getStatus();
   void hideMenu();
   int getCurrentLevel();
+  void showMenu(int menuNumber);
   
 private:
   int menuNumber = 0;

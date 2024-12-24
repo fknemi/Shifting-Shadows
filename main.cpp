@@ -60,9 +60,11 @@ int main() {
   Button title =
       Button("assets/menu/title.png",
              {-screenWidth * (float)0.2, -screenHeight * (float)0.5}, 0.8);
-   Button platform   =
+   
+   Button platform =
       Button("assets/LevelOne/platform.png",
              {0,0}, 0.8);
+   
    
   while (!WindowShouldClose()) {
     float deltaTime = GetFrameTime();
