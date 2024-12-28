@@ -22,191 +22,185 @@
 #include <raylib.h>
 
 int main() {
-  const float screenWidth = 1280;
-  const float screenHeight = 800;
-  const int targetFPS = 60;
-  Player *player = nullptr;
-  Mouse mouse;
-  Level *level = nullptr;
-  Config config;
+    const float screenWidth = 1280;
+    const float screenHeight = 800;
+    const int targetFPS = 60;
+    Player *player = nullptr;
+    Mouse mouse;
+    Level *level = nullptr;
+    Config config;
 
-  InitWindow(screenWidth, screenHeight, "Shifting Shadows");
-  SetTargetFPS(targetFPS);
+    InitWindow(screenWidth, screenHeight, "Shifting Shadows");
+    SetTargetFPS(targetFPS);
 
-  // Initialize camera
-  Camera2D camera = {0};
-  camera.offset = (Vector2){screenWidth / 2, screenHeight / 2};
-  camera.zoom = 1.0f;
-  StartMenu startMenu;
-  Button settingsBtn =
-      Button("assets/menu/settings.png",
-             {-screenWidth * (float)0.1, screenHeight * (float)0.001}, 0.8);
-  Button selectLevelBtn =
-      Button("assets/menu/select-level.png",
-             {-screenWidth * (float)0.1, -screenHeight * (float)0.15}, 0.8);
-  Button *muteBtn =
-      new Button("assets/menu/unmute.png",
-                 {screenWidth * (float)0.43, screenHeight * (float)0.4}, 0.8);
-  Button *unmuteBtn =
-      new Button("assets/menu/mute.png",
-                 {screenWidth * (float)0.43, screenHeight * (float)0.4}, 0.8);
+    // Initialize camera
+    Camera2D camera = {0};
+    camera.offset = (Vector2){screenWidth / 2, screenHeight / 2};
+    camera.zoom = 1.0f;
+    StartMenu startMenu;
+    Button settingsBtn =
+        Button("assets/menu/settings.png",
+                {-screenWidth * (float)0.1, screenHeight * (float)0.001}, 0.8);
+    Button selectLevelBtn =
+        Button("assets/menu/select-level.png",
+                {-screenWidth * (float)0.1, -screenHeight * (float)0.15}, 0.8);
+    Button *muteBtn =
+        new Button("assets/menu/unmute.png",
+                {screenWidth * (float)0.43, screenHeight * (float)0.4}, 0.8);
+    Button *unmuteBtn =
+        new Button("assets/menu/mute.png",
+                {screenWidth * (float)0.43, screenHeight * (float)0.4}, 0.8);
 
-  Button exitBtn =
-      Button("assets/menu/exit.png",
-             {-screenWidth * (float)0.1, screenHeight * (float)0.35}, 0.8);
-  Button backBtn =
-      Button("assets/menu/back.png",
-             {-screenWidth * (float)0.1, -screenHeight * (float)0.15}, 0.8);
-  Button title =
-      Button("assets/menu/title.png",
-             {-screenWidth * (float)0.2, -screenHeight * (float)0.5}, 0.8);
-   
-   Button platform =
-      Button("assets/LevelOne/platform.png",
-             {0,0}, 0.8);
-   
-   
-  while (!WindowShouldClose()) {
-    float deltaTime = GetFrameTime();
+    Button exitBtn =
+        Button("assets/menu/exit.png",
+                {-screenWidth * (float)0.1, screenHeight * (float)0.35}, 0.8);
+    Button backBtn =
+        Button("assets/menu/back.png",
+                {-screenWidth * (float)0.1, -screenHeight * (float)0.15}, 0.8);
+    Button title =
+        Button("assets/menu/title.png",
+                {-screenWidth * (float)0.2, -screenHeight * (float)0.5}, 0.8);
 
-    // Update player
-    BeginDrawing();
-    ClearBackground(LIGHTGRAY);
 
-    BeginMode2D(camera); // Apply the camera transformation
 
-    // startMenu.getStatus() if false player is in menu
-    if (startMenu.getStatus() == 0) {
-      selectLevelBtn.draw();
-      settingsBtn.draw();
-      exitBtn.draw();
-      muteBtn->draw();
-      title.draw();
-      bool mousePressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
-      Vector2 mousePos = GetMousePosition();
-      DrawCircle(mousePos.x, mousePos.y, 5,
-                 BLUE); // Visualize the mouse position
-      if (exitBtn.isPressed(mousePos, mousePressed)) {
-        CloseWindow();
-        return 0;
-      }
-      if (settingsBtn.isPressed(mousePos, mousePressed)) {
-      }
+    while (!WindowShouldClose()) {
+        float deltaTime = GetFrameTime();
 
-      if (muteBtn->isPressed(mousePos, mousePressed)) {
-        if (config.Audio["MasterVolume"] > 0) {
-          // Set volume to 0 and switch to mute button
-          config.Audio["MasterVolume"] = 0;
-          std::swap(muteBtn, unmuteBtn);
-        } else {
-          // Restore volume and switch to unmute button
-          config.Audio["MasterVolume"] = 0.8f;
-          std::swap(muteBtn, unmuteBtn);
+        // Update player
+        BeginDrawing();
+        ClearBackground(LIGHTGRAY);
+
+        BeginMode2D(camera); // Apply the camera transformation
+
+        // startMenu.getStatus() if false player is in menu
+        if (startMenu.getStatus() == 0) {
+            selectLevelBtn.draw();
+            settingsBtn.draw();
+            exitBtn.draw();
+            muteBtn->draw();
+            title.draw();
+            bool mousePressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+            Vector2 mousePos = GetMousePosition();
+            DrawCircle(mousePos.x, mousePos.y, 5,
+                    BLUE); // Visualize the mouse position
+            if (exitBtn.isPressed(mousePos, mousePressed)) {
+                CloseWindow();
+                return 0;
+            }
+            if (settingsBtn.isPressed(mousePos, mousePressed)) {
+            }
+
+            if (muteBtn->isPressed(mousePos, mousePressed)) {
+                if (config.Audio["MasterVolume"] > 0) {
+                    // Set volume to 0 and switch to mute button
+                    config.Audio["MasterVolume"] = 0;
+                    std::swap(muteBtn, unmuteBtn);
+                } else {
+                    // Restore volume and switch to unmute button
+                    config.Audio["MasterVolume"] = 0.8f;
+                    std::swap(muteBtn, unmuteBtn);
+                }
+            }
+            if (selectLevelBtn.isPressed(mousePos, mousePressed)) {
+                startMenu.hideMenu();
+            }
         }
-      }
-      if (selectLevelBtn.isPressed(mousePos, mousePressed)) {
-        startMenu.hideMenu();
-      }
-    }
-    // startMenu.getStatus() if 4 player then the game is started
-    if (startMenu.getStatus() == 3) {
-      player = new Player(screenWidth, screenHeight, (float)screenWidth / 4,
-                          (float)screenHeight / 2);
+        // startMenu.getStatus() if 4 player then the game is started
+        if (startMenu.getStatus()) {
+            player = new Player(screenWidth, screenHeight, (float)screenWidth / 4,
+                    (float)screenHeight / 2);
 
-      camera.target =
-          (Vector2){player->getPosition().x + player->getPosition().width / 2,
+            camera.target =
+                (Vector2){player->getPosition().x + player->getPosition().width / 2,
                     player->getPosition().y + player->getPosition().height / 2};
-      player->update(deltaTime);
-      mouse.update();
-      player->draw();
-      mouse.draw();
-  
-      switch (startMenu.getCurrentLevel()) {
-      case 1:
-        level = new LevelOne();
-        platform.draw();
- 
+            player->update(deltaTime);
+            mouse.update();
+            player->draw();
+            mouse.draw();
 
-             break;
-      case 2:
-        level = new LevelTwo();
-        break;
-      case 3:
-        level = new LevelThree();
-        break;
-      case 4:
-        level = new LevelFour();
-        break;
-      case 5:
-        level = new LevelFive();
-        break;
-      case 6:
-        level = new LevelSix();
-        break;
-      case 7:
-        level = new LevelSeven();
-        break;
-      case 8:
-        level = new LevelEight();
-        break;
-      case 9:
-        level = new LevelNine();
-        break;
-      case 10:
-        level = new LevelTen();
-        break;
-      case 11:
-        level = new LevelEleven();
-        break;
-      case 12:
-        level = new LevelTwelve();
-        break;
-      }
+            switch (startMenu.getCurrentLevel()) {
+                case 1:
+                    level = new LevelOne();
+                    break;
+                case 2:
+                    level = new LevelTwo();
+                    break;
+                case 3:
+                    level = new LevelThree();
+                    break;
+                case 4:
+                    level = new LevelFour();
+                    break;
+                case 5:
+                    level = new LevelFive();
+                    break;
+                case 6:
+                    level = new LevelSix();
+                    break;
+                case 7:
+                    level = new LevelSeven();
+                    break;
+                case 8:
+                    level = new LevelEight();
+                    break;
+                case 9:
+                    level = new LevelNine();
+                    break;
+                case 10:
+                    level = new LevelTen();
+                    break;
+                case 11:
+                    level = new LevelEleven();
+                    break;
+                case 12:
+                    level = new LevelTwelve();
+                    break;
+            }
 
-      std::vector<Rectangle> platforms = level->getPlatforms();
-      for (Rectangle platform : platforms) {
-        if (CheckCollisionRecs(platform, player->getPosition())) {
-          DrawText("Platform Collision", screenWidth * 0.1, 200, 20, RED);
-          player->checkCollisions(true, true, platform, deltaTime);
+            std::vector<Rectangle> platforms = level->getPlatforms();
+            for (Rectangle platform : platforms) {
+                if (CheckCollisionRecs(platform, player->getPosition())) {
+                    DrawText("Platform Collision", screenWidth * 0.1, 200, 20, RED);
+                    player->checkCollisions(true, true, platform, deltaTime);
+                }
+            }
+            if (player->getPosition().y > 800) {
+                player->reset();
+            }
+
+            if (IsKeyDown(Keybinds["MOVE LEFT"].CurrentKeybind)) {
+                player->moveLeft();
+            }
+            if (IsKeyDown(Keybinds["MOVE RIGHT"].CurrentKeybind)) {
+                player->moveRight();
+            }
+            if (IsKeyPressed(Keybinds["JUMP"].CurrentKeybind)) {
+                player->jump();
+            }
+            if (IsKeyPressed(Keybinds["TOGGLE FULLSCREEN"].CurrentKeybind)) {
+                ToggleFullscreen();
+            }
+            if (IsKeyPressed(Keybinds["CAMOUFLAGE"].CurrentKeybind)) {
+            }
+            if (IsKeyPressed(Keybinds["USE TONGUE"].CurrentKeybind)) {
+            }
+            if (IsKeyPressed(Keybinds["GRAB TONGUE"].CurrentKeybind)) {
+            }
         }
-      }
-      if (player->getPosition().y > 800) {
-        player->reset();
-      }
 
-      if (IsKeyDown(Keybinds["MOVE LEFT"].CurrentKeybind)) {
-        player->moveLeft();
-      }
-      if (IsKeyDown(Keybinds["MOVE RIGHT"].CurrentKeybind)) {
-        player->moveRight();
-      }
-      if (IsKeyPressed(Keybinds["JUMP"].CurrentKeybind)) {
-        player->jump();
-      }
-      if (IsKeyPressed(Keybinds["TOGGLE FULLSCREEN"].CurrentKeybind)) {
-        ToggleFullscreen();
-      }
-      if (IsKeyPressed(Keybinds["CAMOUFLAGE"].CurrentKeybind)) {
-      }
-      if (IsKeyPressed(Keybinds["USE TONGUE"].CurrentKeybind)) {
-      }
-      if (IsKeyPressed(Keybinds["GRAB TONGUE"].CurrentKeybind)) {
-      }
+        // Move play->r
+
+        if (IsKeyPressed(Keybinds["CONTINUE"].CurrentKeybind)) {
+            startMenu.hideMenu();
+        }
+
+        EndMode2D(); // End the camera transformation
+
+        DrawFPS(10, 10);
+
+        EndDrawing();
     }
 
-    // Move play->r
-
-    if (IsKeyPressed(Keybinds["CONTINUE"].CurrentKeybind)) {
-      startMenu.hideMenu();
-    }
-
-    EndMode2D(); // End the camera transformation
-
-    DrawFPS(10, 10);
-
-    EndDrawing();
-  }
-
-  CloseWindow(); // Close window and OpenGL context
-  return 0;
+    CloseWindow(); // Close window and OpenGL context
+    return 0;
 }

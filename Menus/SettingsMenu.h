@@ -1,10 +1,10 @@
-#ifndef SELECTLEVELMENU_H
-#define SELECTLEVELMENU_H
+#ifndef SETTINGSMENU_H
+#define SETTINGSMENU_H
 
 #include "raylib.h"
 #include "Menu.h"
 
-class SelectLevelMenu : public Menu {
+class SettingsMenu : public Menu {
     public:
         void draw();
     private:
