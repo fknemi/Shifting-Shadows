@@ -72,8 +72,9 @@ int main() {
 
         BeginMode2D(camera); // Apply the camera transformation
 
-        // startMenu.getStatus() if false player is in menu
-        if (startMenu.getStatus() == 0) {
+        
+        if (startMenu.getCurrentMenu() == 0) {
+            startMenu.showMenu();
             selectLevelBtn.draw();
             settingsBtn.draw();
             exitBtn.draw();
@@ -81,12 +82,14 @@ int main() {
             title.draw();
             bool mousePressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
             Vector2 mousePos = GetMousePosition();
-            DrawCircle(mousePos.x, mousePos.y, 5,
-                    BLUE); // Visualize the mouse position
+
             if (exitBtn.isPressed(mousePos, mousePressed)) {
                 CloseWindow();
                 return 0;
             }
+
+
+
             if (settingsBtn.isPressed(mousePos, mousePressed)) {
             }
 
@@ -105,8 +108,7 @@ int main() {
                 startMenu.hideMenu();
             }
         }
-        // startMenu.getStatus() if 4 player then the game is started
-        if (startMenu.getStatus()) {
+        if (startMenu.isMenuVisible == false) {
             player = new Player(screenWidth, screenHeight, (float)screenWidth / 4,
                     (float)screenHeight / 2);
 

@@ -4,9 +4,18 @@
 void Menu::changeMenu(int num){
     menuNumber = num;
 }
-
-void Menu::hideMenu(){
-    showMenu = false;
+int Menu::getCurrentMenu(){
+    return menuNumber;
 }
+bool Menu::hideMenu(){
+    isMenuVisible = false;
+    return true;
+}
+
+bool Menu::showMenu(){
+    isMenuVisible = true;
+    return true;
+}
+
 int Menu::getCurrentLevel() { return currentLevel; }
 
