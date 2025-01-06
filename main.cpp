@@ -1,4 +1,7 @@
 #include "Menus/StartMenu.cpp"
+#include "Menus/PauseMenu.cpp"
+#include "Menus/SelectLevelMenu.cpp"
+#include "Menus/SettingsMenu.cpp"
 #include "Player.h"
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -45,14 +48,18 @@ int main() {
 #include "levels/LevelTwelve.h"
 #include "levels/LevelTwo.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> b847e32 (added files for all levels and removed broken texture causing seg fault)
 =======
 #include "settings/Config.cpp"
 >>>>>>> dc95e91 (idk too much)
+=======
+>>>>>>> 90b2781 (pretty it up later 1)
 #include "settings/Keybinds.cpp"
 #include <raylib.h>
 
 int main() {
+<<<<<<< HEAD
   const float screenWidth = 1280;
   const float screenHeight = 800;
   const int targetFPS = 60;
@@ -106,28 +113,30 @@ int main() {
 >>>>>>> dc95e91 (idk too much)
   Level *level = nullptr;
   Config config;
+=======
+    const float screenWidth = 1280;
+    const float screenHeight = 800;
+    const int targetFPS = 60;
+    Player *player = nullptr;
+    Mouse mouse;
+    Level *level = nullptr;
+    Config config;
+    Menu menu;
+    StartMenu startMenu;
+    PauseMenu pauseMenu; 
+    SelectLevelMenu selectLevelMenu;
+    SettingsMenu settingsMenu;
+    InitWindow(screenWidth, screenHeight, "Shifting Shadows");
+    SetTargetFPS(targetFPS);
+>>>>>>> 90b2781 (pretty it up later 1)
 
-  InitWindow(screenWidth, screenHeight, "Shifting Shadows");
-  SetTargetFPS(targetFPS);
+    // Initialize camera
+    Camera2D camera = {0, 0};
+    camera.offset = (Vector2){0, 0};
+    camera.zoom = 1.0f;
 
-  // Initialize camera
-  Camera2D camera = {0};
-  camera.offset = (Vector2){screenWidth / 2, screenHeight / 2};
-  camera.zoom = 1.0f;
-  StartMenu startMenu;
-  Button settingsBtn =
-      Button("assets/menu/settings.png",
-             {-screenWidth * (float)0.1, screenHeight * (float)0.001}, 0.8);
-  Button selectLevelBtn =
-      Button("assets/menu/select-level.png",
-             {-screenWidth * (float)0.1, -screenHeight * (float)0.15}, 0.8);
-  Button *muteBtn =
-      new Button("assets/menu/unmute.png",
-                 {screenWidth * (float)0.43, screenHeight * (float)0.4}, 0.8);
-  Button *unmuteBtn =
-      new Button("assets/menu/mute.png",
-                 {screenWidth * (float)0.43, screenHeight * (float)0.4}, 0.8);
 
+<<<<<<< HEAD
   Button exitBtn =
       Button("assets/menu/exit.png",
              {-screenWidth * (float)0.1, screenHeight * (float)0.35}, 0.8);
@@ -152,126 +161,255 @@ int main() {
     // Update player
     BeginDrawing();
     ClearBackground(LIGHTGRAY);
+=======
 
-    BeginMode2D(camera); // Apply the camera transformation
+    Button *settingsBtn =
+        new Button("assets/menu/settings.png",
+                {screenWidth * (float)0.4, screenHeight *(float)0.6}, 0.8);
+    Button *selectLevelBtn =
+        new Button("assets/menu/select-level.png",
+                {screenWidth * (float)0.4, screenHeight * (float)0.5}, 0.8);
+    Button *muteBtn =
+        new Button("assets/menu/unmute.png",
+                {screenWidth * (float)0.95, screenHeight * (float)0.92}, 0.8);
+    Button *unmuteBtn =
+        new Button("assets/menu/mute.png",
+                {screenWidth * (float)0.95, screenHeight * (float)0.92}, 0.8);
+>>>>>>> 90b2781 (pretty it up later 1)
 
-    // startMenu.getStatus() if false player is in menu
-    if (startMenu.getStatus() == 0) {
-      selectLevelBtn.draw();
-      settingsBtn.draw();
-      exitBtn.draw();
-      muteBtn->draw();
-      title.draw();
-      bool mousePressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
-      Vector2 mousePos = GetMousePosition();
-      DrawCircle(mousePos.x, mousePos.y, 5,
-                 BLUE); // Visualize the mouse position
-      if (exitBtn.isPressed(mousePos, mousePressed)) {
-        CloseWindow();
-        return 0;
-      }
-      if (settingsBtn.isPressed(mousePos, mousePressed)) {
-      }
+    Button *exitBtn =
+        new Button("assets/menu/exit.png",
+                {screenWidth * (float)0.4, screenHeight * (float)0.90}, 0.8);
+    Button *backBtn =
+        new Button("assets/menu/back.png",
+                {screenWidth * (float)0.2, screenHeight * (float)0.20}, 0.8);
+    Button *title =
+        new Button("assets/menu/title.png",
+                {screenWidth * (float)0.3, screenHeight * (float)0.1}, 1);
+    // Select Level Buttons
+    Button *levelOneBtn =
+        new Button("assets/menu/1.png",
+                {screenWidth * (float)0.3, screenHeight * (float)0.1}, 1);
+    Button *levelTwoBtn =
+        new Button("assets/menu/2.png",
+                {screenWidth * (float)0.4, screenHeight * (float)0.1}, 1);
 
-      if (muteBtn->isPressed(mousePos, mousePressed)) {
-        if (config.Audio["MasterVolume"] > 0) {
-          // Set volume to 0 and switch to mute button
-          config.Audio["MasterVolume"] = 0;
-          std::swap(muteBtn, unmuteBtn);
-        } else {
-          // Restore volume and switch to unmute button
-          config.Audio["MasterVolume"] = 0.8f;
-          std::swap(muteBtn, unmuteBtn);
+    Button *levelThreeBtn =
+        new Button("assets/menu/3.png",
+                {screenWidth * (float)0.5, screenHeight * (float)0.1}, 1);
+    Button *levelFourBtn =
+        new Button("assets/menu/4.png",
+                {screenWidth * (float)0.6, screenHeight * (float)0.1}, 1);
+
+    while (!WindowShouldClose()) {
+        float deltaTime = GetFrameTime();
+
+        // Update player
+        BeginDrawing();
+        ClearBackground(LIGHTGRAY);
+
+        BeginMode2D(camera); // Apply the camera transformation
+        mouse.update();
+        mouse.draw();
+
+        bool mousePressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+        Vector2 mousePos = GetMousePosition();
+
+        if(menu.isMenuVisible && backBtn && backBtn->isPressed(mousePos,mousePressed)){
+            int currentMenu = menu.getCurrentMenu();
+            menu.changeMenu(currentMenu == 0 ? 0: currentMenu - 1);
+
         }
-      }
-      if (selectLevelBtn.isPressed(mousePos, mousePressed)) {
-        startMenu.hideMenu();
-      }
-    }
-    // startMenu.getStatus() if 4 player then the game is started
-    if (startMenu.getStatus() == 3) {
-      player = new Player(screenWidth, screenHeight, (float)screenWidth / 4,
-                          (float)screenHeight / 2);
+        if (menu.getCurrentMenu() == 0) {
 
-      camera.target =
-          (Vector2){player->getPosition().x + player->getPosition().width / 2,
-                    player->getPosition().y + player->getPosition().height / 2};
-      player->update(deltaTime);
-      mouse.update();
-      player->draw();
-      mouse.draw();
-  
-      switch (startMenu.getCurrentLevel()) {
-      case 1:
-        level = new LevelOne();
-        platform.draw();
- 
+            settingsBtn =
+                new Button("assets/menu/settings.png",
+                        {screenWidth * (float)0.4, screenHeight *(float)0.6}, 0.8);
+            selectLevelBtn =
+                new Button("assets/menu/select-level.png",
+                        {screenWidth * (float)0.4, screenHeight * (float)0.5}, 0.8);
+            muteBtn =
+                new Button("assets/menu/unmute.png",
+                        {screenWidth * (float)0.95, screenHeight * (float)0.92}, 0.8);
+            unmuteBtn =
+                new Button("assets/menu/mute.png",
+                        {screenWidth * (float)0.95, screenHeight * (float)0.92}, 0.8);
 
-             break;
-      case 2:
-        level = new LevelTwo();
-        break;
-      case 3:
-        level = new LevelThree();
-        break;
-      case 4:
-        level = new LevelFour();
-        break;
-      case 5:
-        level = new LevelFive();
-        break;
-      case 6:
-        level = new LevelSix();
-        break;
-      case 7:
-        level = new LevelSeven();
-        break;
-      case 8:
-        level = new LevelEight();
-        break;
-      case 9:
-        level = new LevelNine();
-        break;
-      case 10:
-        level = new LevelTen();
-        break;
-      case 11:
-        level = new LevelEleven();
-        break;
-      case 12:
-        level = new LevelTwelve();
-        break;
-      }
+            exitBtn =
+                new Button("assets/menu/exit.png",
+                        {screenWidth * (float)0.4, screenHeight * (float)0.90}, 0.8);
 
-      std::vector<Rectangle> platforms = level->getPlatforms();
-      for (Rectangle platform : platforms) {
-        if (CheckCollisionRecs(platform, player->getPosition())) {
-          DrawText("Platform Collision", screenWidth * 0.1, 200, 20, RED);
-          player->checkCollisions(true, true, platform, deltaTime);
+            title =
+                new Button("assets/menu/title.png",
+                        {screenWidth * (float)0.3, screenHeight * (float)0.1}, 1);
+
+            startMenu.showMenu();
+            selectLevelBtn->draw();
+            settingsBtn->draw();
+            exitBtn->draw();
+            muteBtn->draw();
+            title->draw();
+
+            if (exitBtn->isPressed(mousePos, mousePressed)) {
+                CloseWindow();
+            }
+
+            if (settingsBtn->isPressed(mousePos, mousePressed)) {
+            }
+
+            if (muteBtn->isPressed(mousePos, mousePressed)) {
+                if (config.Audio["MasterVolume"] > 0) {
+                    // Set volume to 0 and switch to mute button
+                    config.Audio["MasterVolume"] = 0;
+                    std::swap(muteBtn, unmuteBtn);
+                } else {
+                    // Restore volume and switch to unmute button
+                    config.Audio["MasterVolume"] = 0.8f;
+                    std::swap(muteBtn, unmuteBtn);
+                }
+            }
+            if (selectLevelBtn->isPressed(mousePos, mousePressed)) {
+                delete settingsBtn;
+                delete selectLevelBtn;
+                delete exitBtn;
+                delete title;
+                startMenu.hideMenu();
+                menu.changeMenu(1);
+                selectLevelMenu.showMenu();
+                selectLevelMenu.draw();
+            }
+
+
+
+
+        } else if(menu.getCurrentMenu() == 1){
+            levelOneBtn =
+                new Button("assets/menu/1.png",
+                        {screenWidth * (float)0.3, screenHeight * (float)0.1}, 1);
+            levelTwoBtn =
+                new Button("assets/menu/2.png",
+                        {screenWidth * (float)0.4, screenHeight * (float)0.1}, 1);
+
+            levelThreeBtn =
+                new Button("assets/menu/3.png",
+                        {screenWidth * (float)0.5, screenHeight * (float)0.1}, 1);
+            levelFourBtn =
+                new Button("assets/menu/4.png",
+                        {screenWidth * (float)0.6, screenHeight * (float)0.1}, 1);
+
+
+            levelOneBtn->draw();
+            levelTwoBtn->draw();
+            levelThreeBtn->draw();
+            levelFourBtn->draw();
+            backBtn->draw();
+            if (levelOneBtn->isPressed(mousePos, mousePressed)) {
+                menu.hideMenu();
+                menu.changeMenu(4);
+            }
+            if (levelTwoBtn->isPressed(mousePos, mousePressed)) {}
+            if (levelThreeBtn->isPressed(mousePos, mousePressed)) {}
+            if (levelFourBtn->isPressed(mousePos, mousePressed)) {}
+
+
+        } else if(menu.getCurrentMenu() == 2){
+            settingsMenu.draw();
+        } else if(menu.getCurrentMenu() == 3){
+            pauseMenu.draw();
         }
-      }
-      if (player->getPosition().y > 800) {
-        player->reset();
-      }
 
-      if (IsKeyDown(Keybinds["MOVE LEFT"].CurrentKeybind)) {
-        player->moveLeft();
-      }
-      if (IsKeyDown(Keybinds["MOVE RIGHT"].CurrentKeybind)) {
-        player->moveRight();
-      }
-      if (IsKeyPressed(Keybinds["JUMP"].CurrentKeybind)) {
-        player->jump();
-      }
-      if (IsKeyPressed(Keybinds["TOGGLE FULLSCREEN"].CurrentKeybind)) {
-        ToggleFullscreen();
-      }
-      if (IsKeyPressed(Keybinds["CAMOUFLAGE"].CurrentKeybind)) {
-      }
-      if (IsKeyPressed(Keybinds["USE TONGUE"].CurrentKeybind)) {
-      }
-      if (IsKeyPressed(Keybinds["GRAB TONGUE"].CurrentKeybind)) {
-      }
+
+        if (menu.isMenuVisible == false) {
+            player = new Player(screenWidth, screenHeight, (float)screenWidth / 4,
+                    (float)screenHeight / 2);
+
+            //camera.target =
+            //  (Vector2){player->getPosition().x + player->getPosition().width / 2,
+            //    player->getPosition().y + player->getPosition().height / 2};
+            player->update(deltaTime);
+            mouse.update();
+            player->draw();
+            mouse.draw();
+
+            switch (startMenu.getCurrentLevel()) {
+                case 1:
+                    level = new LevelOne();
+                    level->drawPlatforms();
+                    break;
+                case 2:
+                    level = new LevelTwo();
+                    break;
+                case 3:
+                    level = new LevelThree();
+                    break;
+                case 4:
+                    level = new LevelFour();
+                    break;
+                case 5:
+                    level = new LevelFive();
+                    break;
+                case 6:
+                    level = new LevelSix();
+                    break;
+                case 7:
+                    level = new LevelSeven();
+                    break;
+                case 8:
+                    level = new LevelEight();
+                    break;
+                case 9:
+                    level = new LevelNine();
+                    break;
+                case 10:
+                    level = new LevelTen();
+                    break;
+                case 11:
+                    level = new LevelEleven();
+                    break;
+                case 12:
+                    level = new LevelTwelve();
+                    break;
+            }
+
+            std::vector<Rectangle> platforms = level->getPlatforms();
+            for (Rectangle platform : platforms) {
+                if (CheckCollisionRecs(platform, player->getPosition())) {
+                    DrawText("Platform Collision", screenWidth * 0.1, 200, 20, RED);
+                    player->checkCollisions(true, true, platform, deltaTime);
+                }
+            }
+
+            if (IsKeyDown(Keybinds["MOVE LEFT"].CurrentKeybind)) {
+                player->moveLeft();
+            }
+            if (IsKeyDown(Keybinds["MOVE RIGHT"].CurrentKeybind)) {
+                player->moveRight();
+            }
+            if (IsKeyPressed(Keybinds["JUMP"].CurrentKeybind)) {
+                player->jump();
+            }
+            if (IsKeyPressed(Keybinds["TOGGLE FULLSCREEN"].CurrentKeybind)) {
+                ToggleFullscreen();
+            }
+            if (IsKeyPressed(Keybinds["CAMOUFLAGE"].CurrentKeybind)) {
+            }
+            if (IsKeyPressed(Keybinds["USE TONGUE"].CurrentKeybind)) {
+            }
+            if (IsKeyPressed(Keybinds["GRAB TONGUE"].CurrentKeybind)) {
+            }
+        }
+
+        // Move play->r
+
+        if (IsKeyPressed(Keybinds["CONTINUE"].CurrentKeybind)) {
+            startMenu.hideMenu();
+        }
+
+        EndMode2D(); // End the camera transformation
+
+        DrawFPS(10, 10);
+
+        EndDrawing();
     }
 <<<<<<< HEAD
     // Move player
@@ -326,6 +464,7 @@ int main() {
     }
 =======
 
+<<<<<<< HEAD
     // Move play->r
 
 >>>>>>> 75c22ef (fixed camera following player initally, added assets for levels 1-4)
@@ -370,4 +509,8 @@ int main() {
 
   CloseWindow(); // Close window and OpenGL context
   return 0;
+=======
+    CloseWindow(); // Close window and OpenGL context
+    return 0;
+>>>>>>> 90b2781 (pretty it up later 1)
 }

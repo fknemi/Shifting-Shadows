@@ -43,10 +43,15 @@ struct Platform {
   bool drawPlatform;
 =======
 #include "Level.h"
+#include "../elements/platforms/Platform.h"
 #include "vector"
 #include <raylib.h>
+<<<<<<< HEAD
 >>>>>>> b847e32 (added files for all levels and removed broken texture causing seg fault)
 
+=======
+#include <iostream>
+>>>>>>> 90b2781 (pretty it up later 1)
 #ifndef LEVELONE_H
 #define LEVELONE_H
 
@@ -77,6 +82,7 @@ struct Platform {
 class LevelOne {
 =======
 class LevelOne : public Level {
+<<<<<<< HEAD
 >>>>>>> b847e32 (added files for all levels and removed broken texture causing seg fault)
 private:
 <<<<<<< HEAD
@@ -110,23 +116,33 @@ public:
   int stageCount = 1;
   std::vector<Rectangle> platforms;
 >>>>>>> 9fe5fc9 (fixed player falling through floor when reset && updated LevelOne to use vector for platforms)
+=======
+    private:
+        int stageCount = 1;
+        std::vector<Rectangle> platforms;
+        Platform *platformBottom = new Platform("assets/LevelOne/platform.png", {0,800}, 1);
+>>>>>>> 90b2781 (pretty it up later 1)
 
-public:
-  LevelOne() {
-    platforms.push_back({100, 200, 200, 10}); // Example platform
-    }
+    public:
+        LevelOne() {
+            platformBottom->draw();
+            Rectangle p1 = platformBottom->getSize();
+          //  platforms.push_back({p1.width, p1.height, p1.x, p1.y - 400}); // w,h,x,y
+          DrawText(std::to_string(p1.height).c_str(), 500,500, 20, WHITE);
+            platforms.push_back({p1.x,p1.height - 62,p1.width,p1.height - 98});
+        }
 
-  void drawPlatforms() override {
-    for (const auto &platform : platforms) {
-      DrawRectangleRec(platform, BLUE);
-    }
-  }
+        void drawPlatforms() override {
+            for (const auto &platform : platforms) {
+                DrawRectangleLines(platform.x, platform.y, platform.width, platform.height, RED); // Visualize the button's collision area
+            }
+        }
 
-  std::vector<Rectangle> getPlatforms() override { return platforms; }
+        std::vector<Rectangle> getPlatforms() override { return platforms; }
 
-  void update() override {
-    // Update logic specific to LevelOne
-  }
+        void update() override {
+            // Update logic specific to LevelOne
+        }
 };
 <<<<<<< HEAD
 >>>>>>> 82ba856 (added floor platform with collision and collision methods to Player)

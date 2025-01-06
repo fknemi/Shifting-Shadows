@@ -81,11 +81,15 @@ private:
 =======
   
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 517c71c (2D camera update)
   static constexpr float gravity = 700.0f;
 =======
   static constexpr float gravity = 0;
 >>>>>>> dc95e91 (idk too much)
+=======
+  static constexpr float gravity = 300.00f;
+>>>>>>> 90b2781 (pretty it up later 1)
   static constexpr float jumpSpeed = 500.0f;
 >>>>>>> d750e8c (fixed floor and wall collisions, 1 issue left)
 };
