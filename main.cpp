@@ -214,6 +214,14 @@ int main() {
 
         bool mousePressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
         Vector2 mousePos = GetMousePosition();
+        if(player){
+
+        
+player->update(deltaTime);
+            mouse.update();
+            player->draw();
+            mouse.draw();
+}
 
         if(menu.isMenuVisible && backBtn && backBtn->isPressed(mousePos,mousePressed)){
             int currentMenu = menu.getCurrentMenu();
@@ -320,18 +328,12 @@ int main() {
 
 
         if (menu.isMenuVisible == false) {
-            player = new Player(screenWidth, screenHeight, (float)screenWidth / 4,
-                    (float)screenHeight / 2);
+            player = new Player(screenWidth, screenHeight, 0, 0);
 
             //camera.target =
             //  (Vector2){player->getPosition().x + player->getPosition().width / 2,
             //    player->getPosition().y + player->getPosition().height / 2};
-            player->update(deltaTime);
-            mouse.update();
-            player->draw();
-            mouse.draw();
-
-            switch (startMenu.getCurrentLevel()) {
+                        switch (startMenu.getCurrentLevel()) {
                 case 1:
                     level = new LevelOne();
                     level->drawPlatforms();

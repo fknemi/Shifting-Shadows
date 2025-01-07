@@ -3,7 +3,7 @@
 
 class Menu {
     private:
-        int menuNumber = 0;
+        int menuNumber = 4;
         int currentLevel = 1;
         int maxLevel = 12;
     public:
@@ -11,7 +11,7 @@ class Menu {
         int screenHeight = 1200;
 
 
-        bool isMenuVisible = true;
+        bool isMenuVisible = false;
         void changeMenu(int num = 0);
         bool hideMenu();
         bool showMenu();

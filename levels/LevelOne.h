@@ -127,14 +127,16 @@ public:
         LevelOne() {
             platformBottom->draw();
             Rectangle p1 = platformBottom->getSize();
-          //  platforms.push_back({p1.width, p1.height, p1.x, p1.y - 400}); // w,h,x,y
-          DrawText(std::to_string(p1.height).c_str(), 500,500, 20, WHITE);
-            platforms.push_back({p1.x,p1.height - 62,p1.width,p1.height - 98});
+            platforms.push_back({p1.x,p1.height - 62,p1.width,p1.height - 98}); // x,y,w,h
+            platforms.push_back({530,p1.height- 110,p1.width - 530,p1.height - 400}); // x,y,w,h
+            platforms.push_back({625,p1.height- 158,p1.width - 625,p1.height - 400}); // x,y,w,h
+
         }
 
         void drawPlatforms() override {
             for (const auto &platform : platforms) {
-                DrawRectangleLines(platform.x, platform.y, platform.width, platform.height, RED); // Visualize the button's collision area
+                DrawRectangleLines(platform.x, platform.y, platform.width, platform.height, RED); // Visualize the platform's collision area
+
             }
         }
 

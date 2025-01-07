@@ -178,7 +178,6 @@ void Player::reset() {
 
 // TODO: Fix Sometimes Player Can Jump While Falling
 
-// TODO: Fix Sometimes Player Can Jump While Falling
 void Player::checkCollisions(bool xAxis, bool yAxis, Rectangle platform,
         float deltatime) {
     // Vertical collision (y-axis)
