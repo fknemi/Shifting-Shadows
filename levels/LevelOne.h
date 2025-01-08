@@ -135,7 +135,6 @@ public:
 
     public:
         LevelOne() {
-            p1->draw();
             Rectangle p1Size = p1->getSize();
             platforms.push_back({p1Size.x,p1Size.height - 62,p1Size.width,p1Size.height - 98}); // x,y,w,h
             platforms.push_back({530,p1Size.height- 110,p1Size.width - 530,p1Size.height - 400}); // x,y,w,h
@@ -144,10 +143,12 @@ public:
         }
 
         void drawPlatforms() override {
-            for (const auto &platform : platforms) {
-                DrawRectangleLines(platform.x, platform.y, platform.width, platform.height, RED); // Visualize the platform's collision area
+            p1->draw();
 
-            }
+            //           for (const auto &platform : platforms) {
+            //             DrawRectangleLines(platform.x, platform.y, platform.width, platform.height, RED); // Visualize the platform's collision area
+
+            //       }
         }
         void drawObjects() override {
             o1->draw();

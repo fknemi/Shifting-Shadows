@@ -50,10 +50,10 @@ class LevelTwo : public Level {
             p3->draw();
             p4->draw();
             p5->draw();
-            for (const auto &platform : platforms) {
-                       DrawRectangleLines(platform.x, platform.y, platform.width, platform.height, RED); // Visualize the platform's collision area
+           // for (const auto &platform : platforms) {
+             //   DrawRectangleLines(platform.x, platform.y, platform.width, platform.height, RED); // Visualize the platform's collision area
 
-            }
+            //}
         }
         void drawObjects() override {
             o1->draw();

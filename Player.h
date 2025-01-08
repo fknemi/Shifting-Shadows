@@ -62,8 +62,8 @@ public:
 private:
   float x;
   float y;
-  int width = 60;
-  int height = 60;
+  int width = 64;
+  int height = 52;
   int vel;
   bool hitFloor = false;
   bool hitLeftWall = false;

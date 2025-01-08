@@ -132,7 +132,6 @@ int main() {
 
     // Initialize camera
     Camera2D camera = {0, 0};
-    camera.offset = (Vector2){ screenWidth / 2.0f, screenHeight / 2.0f }; // Set the camera center to the middle of the screen
     camera.zoom = 1.0f;
 
 
@@ -182,7 +181,7 @@ int main() {
                 {screenWidth * (float)0.4, screenHeight * (float)0.90}, 0.8);
     Button *backBtn =
         new Button("assets/menu/back.png",
-                {screenWidth * (float)0.2, screenHeight * (float)0.20}, 0.8);
+                {screenWidth * (float)0.4, screenHeight * (float)0.8}, 0.8);
     Button *title =
         new Button("assets/menu/title.png",
                 {screenWidth * (float)0.3, screenHeight * (float)0.1}, 1);
@@ -312,12 +311,32 @@ int main() {
             levelFourBtn->draw();
             backBtn->draw();
             if (levelOneBtn->isPressed(mousePos, mousePressed)) {
+                menu.changeCurrentLevel(1);
                 menu.hideMenu();
                 menu.changeMenu(4);
             }
-            if (levelTwoBtn->isPressed(mousePos, mousePressed)) {}
-            if (levelThreeBtn->isPressed(mousePos, mousePressed)) {}
-            if (levelFourBtn->isPressed(mousePos, mousePressed)) {}
+            if (levelTwoBtn->isPressed(mousePos, mousePressed)) {
+
+                menu.changeCurrentLevel(2);
+
+                menu.hideMenu();
+                menu.changeMenu(4);
+
+            }
+            if (levelThreeBtn->isPressed(mousePos, mousePressed)) {
+                menu.changeCurrentLevel(3);
+
+                menu.hideMenu();
+                menu.changeMenu(4);
+
+            }
+            if (levelFourBtn->isPressed(mousePos, mousePressed)) {
+                menu.changeCurrentLevel(4);
+
+                menu.hideMenu();
+                menu.changeMenu(4);
+
+            }
 
 
         } else if(menu.getCurrentMenu() == 2){
@@ -337,6 +356,8 @@ int main() {
                 targetX = targetX < 642 ? 642 : targetX > 1480 ? 1480 : targetX;
                 targetY = targetY < 400 ? 400 : targetY > 400 ? 400 : targetY;
                 camera.target = (Vector2){ targetX, targetY };
+                camera.offset = (Vector2){ screenWidth / 2.0f, screenHeight / 2.0f }; // Set the camera center to the middle of the screen
+
             }
 
             switch (menu.getCurrentLevel()) {
@@ -384,7 +405,6 @@ int main() {
             std::vector<Rectangle> platforms = level->getPlatforms();
             for (Rectangle platform : platforms) {
                 if (CheckCollisionRecs(platform, player->getPosition())) {
-                    DrawText("Platform Collision", screenWidth * 0.1, 200, 20, RED);
                     player->checkCollisions(true, true, platform, deltaTime);
                 }
             }

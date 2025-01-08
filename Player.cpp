@@ -59,12 +59,14 @@ Player::Player(int screenWidth, int screenHeight, float x, float y, int vel)
         canJump = true;
         isOnGround = false;
         // Load player texture
-        //   texture = LoadTexture("resources/player.png");
+
+        // Define rectangle for cropping (x, y, width, height)
     }
 
 void Player::draw() {
-    // DrawTexture(texture, (int)x, (int)y, WHITE);
-    DrawRectangle(x, y, 60, 60, RED);
+    Texture2D texture = LoadTexture("assets/player/froggo.png");
+    Rectangle cropRect = (Rectangle){ 0, 0, 64, 54 }; 
+    DrawTextureRec(texture, cropRect, (Vector2){ x, y }, WHITE);
 }
 
 void Player::moveLeft() {
@@ -149,10 +151,10 @@ void Player::update(float deltaTime) {
     y += speed * deltaTime;
     speed += gravity * deltaTime;
 
-    DrawText("x", 1280 * 0.7, 50, 20, RED);
-    DrawText(std::to_string(x).c_str(), 1280 * 0.72, 50, 20, RED);
-    DrawText("y", 1280 * 0.7, 100, 20, RED);
-    DrawText(std::to_string(y).c_str(), 1280 * 0.72, 100, 20, RED);
+    //   DrawText("x", 1280 * 0.7, 50, 20, RED);
+    // DrawText(std::to_string(x).c_str(), 1280 * 0.72, 50, 20, RED);
+    //DrawText("y", 1280 * 0.7, 100, 20, RED);
+    //DrawText(std::to_string(y).c_str(), 1280 * 0.72, 100, 20, RED);
     if (hitFloor) {
         speed = 0;
         canJump = true;
@@ -227,6 +229,6 @@ bool Player::togglePlayerCamera(){
     return shouldCameraFollow;
 }
 
-Rectangle Player::getPosition() { return {x, y, 60, 60}; }
+Rectangle Player::getPosition() { return {x, y, 64, 52}; }
 
 float Player::GetRectBottom(Rectangle rect) { return rect.y + rect.height; }

@@ -19,3 +19,8 @@ bool Menu::showMenu(){
 
 int Menu::getCurrentLevel() { return currentLevel; }
 
+void Menu::changeCurrentLevel(int num){
+    currentLevel = num;
+}
+
+
