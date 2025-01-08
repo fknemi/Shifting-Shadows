@@ -218,6 +218,14 @@ void Player::checkCollisions(bool xAxis, bool yAxis, Rectangle platform,
         }
     }
 }
+bool Player::togglePlayerCamera(){
+    if(shouldCameraFollow){
+        shouldCameraFollow = false;
+    }else {
+        shouldCameraFollow = true;
+    }
+    return shouldCameraFollow;
+}
 
 Rectangle Player::getPosition() { return {x, y, 60, 60}; }
 

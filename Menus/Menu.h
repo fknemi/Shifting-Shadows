@@ -4,7 +4,7 @@
 class Menu {
     private:
         int menuNumber = 4;
-        int currentLevel = 1;
+        int currentLevel = 2;
         int maxLevel = 12;
     public:
         int screenWidth = 800;

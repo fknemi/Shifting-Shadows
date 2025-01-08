@@ -132,7 +132,7 @@ int main() {
 
     // Initialize camera
     Camera2D camera = {0, 0};
-    camera.offset = (Vector2){0, 0};
+    camera.offset = (Vector2){ screenWidth / 2.0f, screenHeight / 2.0f }; // Set the camera center to the middle of the screen
     camera.zoom = 1.0f;
 
 
@@ -186,7 +186,6 @@ int main() {
     Button *title =
         new Button("assets/menu/title.png",
                 {screenWidth * (float)0.3, screenHeight * (float)0.1}, 1);
-    // Select Level Buttons
     Button *levelOneBtn =
         new Button("assets/menu/1.png",
                 {screenWidth * (float)0.3, screenHeight * (float)0.1}, 1);
@@ -206,7 +205,7 @@ int main() {
 
         // Update player
         BeginDrawing();
-        ClearBackground(LIGHTGRAY);
+        ClearBackground((Color){198, 233, 241, 255});
 
         BeginMode2D(camera); // Apply the camera transformation
         mouse.update();
@@ -214,14 +213,15 @@ int main() {
 
         bool mousePressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
         Vector2 mousePos = GetMousePosition();
+
         if(player){
 
-        
-player->update(deltaTime);
+
+            player->update(deltaTime);
             mouse.update();
             player->draw();
             mouse.draw();
-}
+        }
 
         if(menu.isMenuVisible && backBtn && backBtn->isPressed(mousePos,mousePressed)){
             int currentMenu = menu.getCurrentMenu();
@@ -327,19 +327,25 @@ player->update(deltaTime);
         }
 
 
-        if (menu.isMenuVisible == false) {
-            player = new Player(screenWidth, screenHeight, 0, 0);
+        if (!menu.isMenuVisible) {
+            if(!player){
+                player = new Player(screenWidth, screenHeight, 100, 100);
+            }
+            if(player->shouldCameraFollow){
+                float targetX = player->getPosition().x;
+                float targetY = player->getPosition().y;
+                targetX = targetX < 642 ? 642 : targetX > 1480 ? 1480 : targetX;
+                targetY = targetY < 400 ? 400 : targetY > 400 ? 400 : targetY;
+                camera.target = (Vector2){ targetX, targetY };
+            }
 
-            //camera.target =
-            //  (Vector2){player->getPosition().x + player->getPosition().width / 2,
-            //    player->getPosition().y + player->getPosition().height / 2};
-                        switch (startMenu.getCurrentLevel()) {
+            switch (menu.getCurrentLevel()) {
                 case 1:
                     level = new LevelOne();
-                    level->drawPlatforms();
                     break;
                 case 2:
                     level = new LevelTwo();
+                    player->togglePlayerCamera();
                     break;
                 case 3:
                     level = new LevelThree();
@@ -373,6 +379,8 @@ player->update(deltaTime);
                     break;
             }
 
+            level->drawPlatforms();
+            level->drawObjects();
             std::vector<Rectangle> platforms = level->getPlatforms();
             for (Rectangle platform : platforms) {
                 if (CheckCollisionRecs(platform, player->getPosition())) {
@@ -391,7 +399,6 @@ player->update(deltaTime);
                 player->jump();
             }
             if (IsKeyPressed(Keybinds["TOGGLE FULLSCREEN"].CurrentKeybind)) {
-                ToggleFullscreen();
             }
             if (IsKeyPressed(Keybinds["CAMOUFLAGE"].CurrentKeybind)) {
             }

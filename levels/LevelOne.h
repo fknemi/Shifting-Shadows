@@ -43,13 +43,15 @@ struct Platform {
   bool drawPlatform;
 =======
 #include "Level.h"
-#include "../elements/platforms/Platform.h"
 #include "vector"
+<<<<<<< HEAD
 #include <raylib.h>
 <<<<<<< HEAD
 >>>>>>> b847e32 (added files for all levels and removed broken texture causing seg fault)
 
 =======
+=======
+>>>>>>> 4ea8a1b (pretty later 2)
 #include <iostream>
 >>>>>>> 90b2781 (pretty it up later 1)
 #ifndef LEVELONE_H
@@ -120,16 +122,24 @@ public:
     private:
         int stageCount = 1;
         std::vector<Rectangle> platforms;
+<<<<<<< HEAD
         Platform *platformBottom = new Platform("assets/LevelOne/platform.png", {0,800}, 1);
 >>>>>>> 90b2781 (pretty it up later 1)
+=======
+        Platform *p1 = new Platform("assets/LevelOne/platform.png", {0,800}, 1);
+        Object *o1 = new Object("assets/LevelOne/tree.png", {181,420}, 1);
+        Object *o2 = new Object("assets/LevelOne/tree.png", {764,321}, 1);
+        Object *o3 = new Object("assets/LevelOne/stone-right-pointer.png", {423,420}, 1);
+        Object *c1 = new Object("assets/LevelOne/coin.png", {1220,321}, 1);
+>>>>>>> 4ea8a1b (pretty later 2)
 
     public:
         LevelOne() {
-            platformBottom->draw();
-            Rectangle p1 = platformBottom->getSize();
-            platforms.push_back({p1.x,p1.height - 62,p1.width,p1.height - 98}); // x,y,w,h
-            platforms.push_back({530,p1.height- 110,p1.width - 530,p1.height - 400}); // x,y,w,h
-            platforms.push_back({625,p1.height- 158,p1.width - 625,p1.height - 400}); // x,y,w,h
+            p1->draw();
+            Rectangle p1Size = p1->getSize();
+            platforms.push_back({p1Size.x,p1Size.height - 62,p1Size.width,p1Size.height - 98}); // x,y,w,h
+            platforms.push_back({530,p1Size.height- 110,p1Size.width - 530,p1Size.height - 400}); // x,y,w,h
+            platforms.push_back({625,p1Size.height- 158,p1Size.width - 625,p1Size.height - 400}); // x,y,w,h
 
         }
 
@@ -139,7 +149,12 @@ public:
 
             }
         }
-
+        void drawObjects() override {
+            o1->draw();
+            o2->draw();
+            o3->draw();
+            c1->draw();
+        }
         std::vector<Rectangle> getPlatforms() override { return platforms; }
 
         void update() override {

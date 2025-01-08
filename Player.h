@@ -48,11 +48,16 @@ public:
   void moveRight();
   void jump();
   void reset();
+  bool togglePlayerCamera();
   void update(float deltaTime);
   void checkCollisions(bool x, bool y, Rectangle platform, float deltatime);
   Rectangle getPosition();
   float GetRectBottom(Rectangle rect);
+<<<<<<< HEAD
 >>>>>>> d750e8c (fixed floor and wall collisions, 1 issue left)
+=======
+ bool shouldCameraFollow = false;
+>>>>>>> 4ea8a1b (pretty later 2)
 
 private:
   float x;
@@ -69,7 +74,7 @@ private:
   float speed;
   bool canJump;
   bool isOnGround;
-  std::array<int, 3> yAxisCollisionoffsets = {10, 20, 35};
+   std::array<int, 3> yAxisCollisionoffsets = {10, 20, 35};
   int xAxisCollisionoffset = 5;
 <<<<<<< HEAD
 
