@@ -22,6 +22,8 @@ public:
       DrawRectangleRec(platform, BLUE);
     }
   }
+     void drawObjects() override {
+        }
 
   std::vector<Rectangle> getPlatforms() override { return platforms; }
 

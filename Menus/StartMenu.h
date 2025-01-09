@@ -6,9 +6,13 @@
 
 class StartMenu : public Menu {
     public:
+        StartMenu();
         void draw();
     private:
         int menuNumber = 0;
+
+
+
 };
 
 #endif

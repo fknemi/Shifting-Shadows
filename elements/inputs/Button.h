@@ -1,3 +1,6 @@
+#ifndef BUTTON_H
+#define BUTTON_H
+
 #include <raylib.h>
 
 class Button {
@@ -11,3 +14,5 @@ private:
   Texture texture;
   Vector2 position;
 };
+
+#endif

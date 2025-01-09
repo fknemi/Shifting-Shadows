@@ -8,7 +8,7 @@ class SelectLevelMenu : public Menu {
     public:
         void draw();
     private:
-        int menuNumber = 2;
+        int menuNumber = 1;
 };
 
 #endif
