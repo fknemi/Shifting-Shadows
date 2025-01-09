@@ -17,6 +17,7 @@ public:
 
   virtual void drawPlatforms() = 0;
   virtual void drawObjects() = 0;
+
   virtual std::vector<Rectangle> getPlatforms() = 0;
 
   virtual void update() = 0; 

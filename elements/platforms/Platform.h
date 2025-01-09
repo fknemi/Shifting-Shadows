@@ -9,5 +9,6 @@ class Platform {
         Rectangle getSize();
         ~Platform();
         void draw();
+        void isNotVisible(Platform p);
 
 };

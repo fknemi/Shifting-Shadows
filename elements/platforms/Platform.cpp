@@ -1,4 +1,5 @@
 #include "Platform.h"
+#include "../../Player.h"
 #include <raylib.h>
 
 
@@ -16,5 +17,14 @@ void  Platform::draw(){
 }
 Rectangle Platform::getSize(){
     return {position.x, position.y, (float)texture.width, (float)texture.height};
+}
+
+
+bool isNotVisible(Platform b, int targetX, int targetY){
+    Rectangle size = b.getSize();
+if(size.x + size.width){
+return true;
+}
+
 }
 

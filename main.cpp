@@ -116,7 +116,7 @@ int main() {
 =======
     const float screenWidth = 1280;
     const float screenHeight = 800;
-    const int targetFPS = 60;
+    const int targetFPS = 80;
     Player *player = nullptr;
     Mouse mouse;
     Level *level = nullptr;
@@ -198,6 +198,38 @@ int main() {
     Button *levelFourBtn =
         new Button("assets/menu/4.png",
                 {screenWidth * (float)0.6, screenHeight * (float)0.1}, 1);
+    Button *levelLocked5 =
+        new Button("assets/menu/locked.png",
+                {screenWidth * (float)0.3, screenHeight * (float)0.3}, 1);
+    Button *levelLocked6 =
+        new Button("assets/menu/locked.png",
+                {screenWidth * (float)0.4, screenHeight * (float)0.3}, 1);
+
+    Button *levelLocked7 =
+        new Button("assets/menu/locked.png",
+                {screenWidth * (float)0.5, screenHeight * (float)0.3}, 1);
+    Button *levelLocked8 =
+        new Button("assets/menu/locked.png",
+                {screenWidth * (float)0.6, screenHeight * (float)0.3}, 1);
+    Button *levelLocked9 =
+        new Button("assets/menu/locked.png",
+                {screenWidth * (float)0.3, screenHeight * (float)0.5}, 1);
+
+    Button *levelLocked10 =
+        new Button("assets/menu/locked.png",
+                {screenWidth * (float)0.4, screenHeight * (float)0.5}, 1);
+
+
+    Button *levelLocked11 =
+        new Button("assets/menu/locked.png",
+                {screenWidth * (float)0.5, screenHeight * (float)0.5}, 1);
+
+
+    Button *levelLocked12 =
+        new Button("assets/menu/locked.png",
+                {screenWidth * (float)0.6, screenHeight * (float)0.5}, 1);
+
+
 
     while (!WindowShouldClose()) {
         float deltaTime = GetFrameTime();
@@ -215,6 +247,7 @@ int main() {
 
         if(player){
 
+            DrawFPS(10, 10);
 
             player->update(deltaTime);
             mouse.update();
@@ -304,12 +337,54 @@ int main() {
                 new Button("assets/menu/4.png",
                         {screenWidth * (float)0.6, screenHeight * (float)0.1}, 1);
 
+            levelLocked5 =
+                new Button("assets/menu/locked.png",
+                        {screenWidth * (float)0.3, screenHeight * (float)0.3}, 1);
+
+
+
+            levelLocked6 =
+                new Button("assets/menu/locked.png",
+                        {screenWidth * (float)0.4, screenHeight * (float)0.3}, 1);
+
+            levelLocked7 =
+                new Button("assets/menu/locked.png",
+                        {screenWidth * (float)0.5, screenHeight * (float)0.3}, 1);
+            levelLocked8 =
+                new Button("assets/menu/locked.png",
+                        {screenWidth * (float)0.6, screenHeight * (float)0.3}, 1);
+            levelLocked9 =
+                new Button("assets/menu/locked.png",
+                        {screenWidth * (float)0.3, screenHeight * (float)0.5}, 1);
+
+            levelLocked10 =
+                new Button("assets/menu/locked.png",
+                        {screenWidth * (float)0.4, screenHeight * (float)0.5}, 1);
+
+            levelLocked11 =
+                new Button("assets/menu/locked.png",
+                        {screenWidth * (float)0.5, screenHeight * (float)0.5}, 1);
+
+
+            levelLocked12 =
+                new Button("assets/menu/locked.png",
+                        {screenWidth * (float)0.6, screenHeight * (float)0.5}, 1);
+
+
 
             levelOneBtn->draw();
             levelTwoBtn->draw();
             levelThreeBtn->draw();
             levelFourBtn->draw();
             backBtn->draw();
+            levelLocked5->draw();
+            levelLocked6->draw();
+            levelLocked7->draw();
+            levelLocked8->draw();
+            levelLocked9->draw();
+            levelLocked10->draw();
+            levelLocked11->draw();
+            levelLocked12->draw();
             if (levelOneBtn->isPressed(mousePos, mousePressed)) {
                 menu.changeCurrentLevel(1);
                 menu.hideMenu();
@@ -436,7 +511,6 @@ int main() {
 
         EndMode2D(); // End the camera transformation
 
-        DrawFPS(10, 10);
 
         EndDrawing();
     }

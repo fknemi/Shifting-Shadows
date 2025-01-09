@@ -31,7 +31,7 @@ void Button::draw() {
   DrawTextureV(texture, position, WHITE);
   Rectangle rect = {position.x, position.y, static_cast<float>(texture.width),
                     static_cast<float>(texture.height)};
-  DrawRectangleLines(rect.x, rect.y, rect.width, rect.height, RED); // Visualize the button's collision area
+ // DrawRectangleLines(rect.x, rect.y, rect.width, rect.height, RED); // Visualize the button's collision area
 }
 
 bool Button::isPressed(Vector2 mousePos, bool mousePressed) {

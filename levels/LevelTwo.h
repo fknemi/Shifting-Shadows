@@ -24,7 +24,7 @@ class LevelTwo : public Level {
         Object *c1 = new Object("assets/LevelTwo/coin.png", {860,528}, 1);
         Object *c2 = new Object("assets/LevelTwo/coin.png", {1394,528}, 1);
         Object *c3 = new Object("assets/LevelTwo/coin.png", {1810,450}, 1);
-        Object *c4 = new Object("assets/LevelTwo/coin.png", {1810,100}, 1);
+        Object *c4 = new Object("assets/LevelTwo/coin.png", {1810,120}, 1);
 
     public:
         LevelTwo() {
@@ -33,8 +33,21 @@ class LevelTwo : public Level {
             Rectangle p3Size = p3->getSize();
             Rectangle p4Size = p4->getSize();
             Rectangle p5Size = p5->getSize();
-            //   platforms.push_back({0,500,2000,10}); // x,y,w,h
-            platforms.push_back({p1Size.x,1300-p1Size.y,p1Size.width,p1Size.height}); // x,y,w,h
+            // Debug Platform
+            // platforms.push_back({0,500,2000,10});
+            // Start Platform - Bottom Platform 1
+            platforms.push_back({p1Size.x,1395-p1Size.y,p1Size.width,p1Size.height - 100}); // x,y,w,h
+            platforms.push_back({p1Size.x+290,1347-p1Size.y,p1Size.width - 295,p1Size.height - 100}); // x,y,w,h
+            platforms.push_back({p1Size.x+434,1300-p1Size.y,95,p1Size.height}); // x,y,w,h
+            // Bottom Platform 2
+            platforms.push_back({p2Size.x,1330-p1Size.y,p2Size.width,p2Size.height}); // x,y,w,h
+             // Bottom Platform 3
+            platforms.push_back({p3Size.x,1359-p3Size.y,p3Size.width,p3Size.height}); // x,y,w,h
+// Double Platform - Bottom Platform 4
+            platforms.push_back({p4Size.x,1359-p3Size.y,p4Size.width,p4Size.height}); // x,y,w,h
+// Double Platform - Bottom Platform 5
+            platforms.push_back({p5Size.x,1359-p5Size.y,p5Size.width,p5Size.height}); // x,y,w,h
+
 
 
         }
@@ -50,17 +63,18 @@ class LevelTwo : public Level {
             p3->draw();
             p4->draw();
             p5->draw();
-           // for (const auto &platform : platforms) {
-             //   DrawRectangleLines(platform.x, platform.y, platform.width, platform.height, RED); // Visualize the platform's collision area
+         //   for (const auto &platform : platforms) {
+           //     DrawRectangleLines(platform.x, platform.y, platform.width, platform.height, RED); // Visualize the platform's collision area
 
             //}
         }
         void drawObjects() override {
-            o1->draw();
-            c1->draw();
-            c2->draw();
+           //             c1->draw();
+            //c2->draw();
             c3->draw();
             c4->draw();
+o1->draw();
+
         }
 
         std::vector<Rectangle> getPlatforms() override { return platforms; }
